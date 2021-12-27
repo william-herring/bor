@@ -1,6 +1,6 @@
 # Bor
 
-Bor is a platform for managing work in a team of any size.
+Bor is a platform for managing projects in a team of any size.
 The app offers many tools and features to create a tailored 
 workflow. 
 
@@ -10,6 +10,7 @@ workflow.
     - [ Run the dev server ](#dgserver)
     - [ Run the client in dev mode ](#dgclient)
     - [ Pick an issue ](#dgissues)
+    - [ Submit a pull request ](#dgpr)
 
 <a name="devg"></a>
 ## Developer guide
@@ -61,6 +62,7 @@ python3 manage.py migrate
 ```
 
 Run the server as per the regular Django CLI command.
+
 (bor/server)
 ```bash
 python3 manage.py runserver
@@ -81,3 +83,8 @@ codebase that target problems or suggestions in the
 <a href="https://github.com/william-herring/bor/issues">issues tab</a>.
 
 
+<a name="dgpr"></a>
+### Submit a pull request
+Submit a pull request when you believe that the changes are necessary, tested and 
+of **high quality**. When you create a pull request, ensure that you do not delete 
+the template. Anything that does not match the template will be closed.
