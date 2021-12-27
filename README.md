@@ -5,6 +5,9 @@ The app offers many tools and features to create a tailored
 workflow. 
 
 ## Developer guide
+Bor is maintained by a single person, so it helps to turn this 
+into a community-developed project to ensure that quality of Bor is top-notch.
+This developer huide should have everything you need to know to help contribute.
 
 ### Info
 
