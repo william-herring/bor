@@ -1,8 +1,8 @@
 # Bor
 
-Bor is a platform for managing projects in a team of any size.
-The app offers many tools and features to create a tailored 
-workflow. 
+Bor is an app for managing projects in a team of any size.
+The app offers many tools and features to create a tailored
+workflow.
 
 1. [ Developer guide ](#devg)
     - [ Info ](#dginfo)
@@ -14,23 +14,23 @@ workflow.
 
 <a name="devg"></a>
 ## Developer guide
-Bor is maintained by a single person, so it helps to turn this 
+Bor is maintained by a single person, so it helps to turn this
 into a community-developed project to ensure that quality of Bor is top-notch.
 This developer huide should have everything you need to know to help contribute.
 
 <a name="dginfo"></a>
 ### Info
 
-Ensure you have Python 3.9 or higher installed and 
-the latest version of Node.
+Bor is currently designed to run on the web, iPadOS, iOS and Android.
+Ensure you have Python 3.9 or higher installed and
+the latest version of Flutter.
 You should be familiar with the following:
 
 | Framework/Library     | Use case         | Language  |
 |-----------------------|------------------|-----------|
 | Django                | Server(REST API) | Python    |
-| React                 | Client           | Typescript|
+| Flutter               | Client           | Dart      |
 | Django Rest Framework | Server(REST API) | Python    |
-| TailwindCSS           | Client/Styling   | CSS/JS    |
 
 <a name="dgsetup"></a>
 ### Setup
@@ -42,12 +42,11 @@ Firstly, clone the repository.
 git clone https://github.com/william-herring/bor.git
 ```
 
-You will then need to install the dependecies from package.json 
-with NPM.
+You will then need to install the dependencies from pubspec.yaml.
 
 (bor/client)
 ```bash
-npm install
+flutter pub get
 ```
 
 <a name="dgserver"></a>
@@ -70,21 +69,24 @@ python3 manage.py runserver
 
 <a name="dgclient"></a>
 ### Run client in dev mode
+
+It is recommended that you run on the web, to allow easy window resizing.
+
 (bor/client)
 ```bash
-npm start
+flutter run
 ```
 
 <a name="dgissues"></a>
 ### Pick an issue
 
-Primarily, you should be making changes to the 
-codebase that target problems or suggestions in the 
+Primarily, you should be making changes to the
+codebase that target problems or suggestions in the
 <a href="https://github.com/william-herring/bor/issues">issues tab</a>.
 
 
 <a name="dgpr"></a>
 ### Submit a pull request
-Submit a pull request when you believe that the changes are necessary, tested and 
-of **high quality**. When you create a pull request, ensure that you do not delete 
+Submit a pull request when you believe that the changes are necessary, tested and
+of **high quality**. When you create a pull request, ensure that you do not delete
 the template. Anything that does not match the template will be closed.
