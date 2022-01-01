@@ -1,4 +1,5 @@
-import 'package:bor/cards/join_team_card.dart';
+import 'package:bor/nav/join_team_stack.dart';
+import 'package:bor/objects/team_obj.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -26,7 +27,7 @@ class JoinTeamScreen extends StatelessWidget {
       ),
 
       body: const Center(
-        child: JoinTeamCard(),
+        child: JoinTeamStack(),
       )
     );
   }

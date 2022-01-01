@@ -3,7 +3,7 @@ import 'package:bor/screens/teams.dart';
 import 'package:flutter/material.dart';
 
 bool isLoggedOut = true;
-const port = "localhost:8000";
+const port = "http://127.0.0.1:8000";
 const dev = true;
 
 void main() {

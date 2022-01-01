@@ -41,9 +41,9 @@ class JoinTeamView(APIView):
 
         code = request.data.get(self.lookup_url_kwarg)
         if code is not None:
-            queryset = Team.objects.filter(code=code)
-            if len(queryset) > 0:
-                team = queryset[0]
+            team_result = Team.objects.filter(code=code)
+            if len(team_result) > 0:
+                team = team_result[0]
                 self.request.session['team_code'] = code
                 return Response({'Joined team': f'{code}'}, status=HTTP_200_OK)
             return Response({'Team does not exist'}, status=HTTP_400_BAD_REQUEST)
