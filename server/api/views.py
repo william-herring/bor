@@ -3,6 +3,7 @@ from rest_framework.views import APIView
 from .models import Team
 from rest_framework.status import *
 from rest_framework.response import Response
+
 from .serializers import *
 
 
@@ -45,4 +46,21 @@ class JoinTeamView(APIView):
                 self.request.session['team_code'] = code
                 return Response({'Joined team': f'{code}'}, status=HTTP_200_OK)
             return Response({'Team does not exist'}, status=HTTP_400_BAD_REQUEST)
+
         return Response({'Invalid code'}, status=HTTP_400_BAD_REQUEST)
+
+
+class GetTeamView(APIView):
+    serializer_class = TeamSerializer
+    lookup_url_kwarg = 'code'
+
+    def get(self, request, format=None):
+        code = request.GET.get(self.lookup_url_kwarg)
+        if code is not None:
+            room = Team.objects.filter(code=code)
+            if len(room) > 0:
+                data = TeamSerializer(room[0]).data
+                return Response(data, status=HTTP_200_OK)
+            return Response({'Team not found': 'Invalid code'}, status=HTTP_404_NOT_FOUND)
+
+        return Response({'Bad request': 'Code parameter not found in request'}, status=HTTP_400_BAD_REQUEST)

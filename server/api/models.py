@@ -11,7 +11,7 @@ def generate_random_code():
         if Team.objects.filter(code=code).count() == 0:
             break
 
-        return code
+    return code
 
 
 class Team(models.Model):
