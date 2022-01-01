@@ -1,7 +1,8 @@
+import 'package:bor/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:http/http.dart';
+import 'package:http/http.dart' as http;
 
 class JoinTeamCard extends StatefulWidget {
   const JoinTeamCard({Key? key}) : super(key: key);
@@ -45,9 +46,13 @@ class _JoinTeamCardState extends State<JoinTeamCard> {
                 const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
                 var message = "";
 
-                value.split('').forEach((c) => !chars.contains(c) ? message = "Unexpected character: ${c}" : message = message);
+                value.split('').forEach((c) => !chars.contains(c) ? message = "Unexpected character: $c" : message = message);
                 if (message.isNotEmpty) {
                   return message;
+                }
+
+                Future<http.Response> fetchTeam() {
+                  return http.get(Uri.parse(port + "/get-team?code=$value"));
                 }
               },
 
