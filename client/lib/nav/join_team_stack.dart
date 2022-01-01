@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:animations/animations.dart';
 import 'package:bor/main.dart';
 import 'package:bor/objects/team_obj.dart';
 import 'package:flutter/material.dart';
@@ -47,6 +48,7 @@ class _JoinTeamStackState extends State<JoinTeamStack> {
       height: 400,
       child: IndexedStack(
         index: stackIndex,
+        key: ValueKey<int>(stackIndex),
 
         children: [
           Form(
@@ -85,14 +87,21 @@ class _JoinTeamStackState extends State<JoinTeamStack> {
                       return message;
                     }
 
-                    fetchTeam(value).then((value) => print(value.code));
 
-                    setState(() {
-                      requestedTeam = fetchTeam(value);
-                      isTeamInitialized = true;
-                      codeInput = value;
-                      stackIndex += 1;
+                    //Everything from this point could be far more efficient. At the moment, it has to send two identical requests.
+                    Future<Team> team = fetchTeam(value).then((v) {
+                      setState(() {
+                        requestedTeam = fetchTeam(value);
+                        isTeamInitialized = true;
+                        codeInput = value;
+                        stackIndex += 1;
+                      });
+                      return v;
+                    }).onError((error, stackTrace) {
+                      return fetchTeam(value);
                     });
+
+                    return "Please enter a valid code";
                   },
 
                   inputFormatters: [
@@ -116,71 +125,66 @@ class _JoinTeamStackState extends State<JoinTeamStack> {
                   children: [
                     Padding(
                       padding: const EdgeInsets.all(15.0),
-                      child: IconButton(onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          //TODO: Join room logic
-                        }
-                      },
+                      child: IconButton(onPressed: () => _formKey.currentState!.validate(),
                           icon: const Icon(Icons.arrow_forward)),
-                    )
+                    ),
                   ],
                 )
               ],
             ),
           ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              isTeamInitialized? FutureBuilder<Team>(
-                  future: requestedTeam,
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      return Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+
+          /* Index 1: This stack contains a FutureBuilder widget.
+          The FutureBuilder builds the join card when the requestedTeam Future is initialized.
+           */
+          isTeamInitialized? FutureBuilder<Team>(
+              future: requestedTeam,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Column(
                         children: [
-                          Column(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(40.0),
+                          Padding(
+                            padding: const EdgeInsets.all(40.0),
+                            child: Text(
+                              snapshot.data!.title,
+                              textAlign: TextAlign.center,
+                              style: GoogleFonts.ubuntu(
+                                fontSize: 60.0,
+                                fontWeight: FontWeight.bold,
+                              )
+                            ),
+                          ),
+                          ElevatedButton(
+                              onPressed: () {},
+                              child: Padding(
+                                padding: const EdgeInsets.all(12.0),
                                 child: Text(
-                                  snapshot.data!.title,
-                                  textAlign: TextAlign.center,
+                                  "Join",
                                   style: GoogleFonts.ubuntu(
-                                    fontSize: 60.0,
-                                    fontWeight: FontWeight.bold,
-                                  )
-                                ),
-                              ),
-                              ElevatedButton(
-                                  onPressed: () {},
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(12.0),
-                                    child: Text(
-                                      "Join",
-                                      style: GoogleFonts.ubuntu(
-                                        color: Colors.white,
-                                      ),
-                                    ),
+                                    color: Colors.white,
                                   ),
-                                style: ElevatedButton.styleFrom(
-                                  primary: Colors.deepPurpleAccent,
                                 ),
                               ),
-                            ],
+                            style: ElevatedButton.styleFrom(
+                              primary: Colors.deepPurpleAccent,
+                            ),
                           ),
                         ],
-                      );
-                    } else if (snapshot.hasError) {
-                      setState(() {
-                        stackIndex = 0;
-                      });
-                    }
+                      ),
+                    ],
+                  );
+                } else if (snapshot.hasError) {
+                  setState(() {
+                    stackIndex = 0;
+                  });
+                }
 
-                    return const CircularProgressIndicator(color: Colors.deepPurpleAccent);
-                  }
-              ) : const Text("Something went wrong, please try again.")
-            ],
-          )
+                return const CircularProgressIndicator(color: Colors.deepPurpleAccent);
+              }
+          ) : const Text("Something went wrong, please try again.")
         ],
       ),
     );
