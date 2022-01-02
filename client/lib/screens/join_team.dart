@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class JoinTeamScreen extends StatelessWidget {
-  const JoinTeamScreen({Key? key}) : super(key: key);
+  final String code;
+  const JoinTeamScreen({Key? key, this.code = ""}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    print(code);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -26,8 +28,8 @@ class JoinTeamScreen extends StatelessWidget {
         ),
       ),
 
-      body: const Center(
-        child: JoinTeamStack(),
+      body: Center(
+        child: code.isEmpty? const JoinTeamStack() : Text(code),
       )
     );
   }

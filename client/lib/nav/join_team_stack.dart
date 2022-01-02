@@ -89,7 +89,7 @@ class _JoinTeamStackState extends State<JoinTeamStack> {
 
 
                     //Everything from this point could be far more efficient. At the moment, it has to send two identical requests.
-                    Future<Team> team = fetchTeam(value).then((v) {
+                    fetchTeam(value).then((v) {
                       setState(() {
                         requestedTeam = fetchTeam(value);
                         isTeamInitialized = true;

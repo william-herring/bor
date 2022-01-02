@@ -16,13 +16,13 @@ class App extends StatelessWidget {
   @override
   Widget build(context) {
     return MaterialApp(
-      initialRoute: isLoggedOut ? '/join' : '/teams',
+      initialRoute: isLoggedOut ? '/join' : '/teams', //join to be replaced by login
 
       title: 'Bor',
       debugShowCheckedModeBanner: false,
       routes: {
-        '/join': (context) => const JoinTeamScreen(),
         '/teams': (context) => const TeamScreen(),
+        '/join': (context) => const JoinTeamScreen(),
       },
     );
   }
