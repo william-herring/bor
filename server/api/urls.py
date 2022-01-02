@@ -6,5 +6,6 @@ urlpatterns = [
     path('team', TeamView.as_view()),
     path('create-team', CreateTeamView.as_view()),
     path('get-team', GetTeamView.as_view()),
-    path('user', UserView.as_view())
+    path('user', UserView.as_view()),
+    path('create-user', CreateUserView.as_view())
 ]
