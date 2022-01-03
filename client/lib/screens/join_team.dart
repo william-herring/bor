@@ -9,8 +9,6 @@ class JoinTeamScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(code + code.isEmpty.toString());
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
