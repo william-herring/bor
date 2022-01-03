@@ -170,14 +170,16 @@ class _JoinTeamStackState extends State<JoinTeamStack> {
                         children: [
                           Padding(
                             padding: const EdgeInsets.all(40.0),
-                            child: Flexible(
+                            child: SizedBox(
+                              width: 900,
                               child: Text(
                                 snapshot.data!.title,
                                 textAlign: TextAlign.center,
                                 style: GoogleFonts.ubuntu(
                                   fontSize: 60.0,
                                   fontWeight: FontWeight.w500,
-                                )
+                                ),
+                                overflow: TextOverflow.clip,
                               ),
                             ),
                           ),
