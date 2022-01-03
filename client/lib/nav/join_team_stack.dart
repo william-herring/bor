@@ -62,8 +62,6 @@ class _JoinTeamStackState extends State<JoinTeamStack> {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(3.5),
-      width: 400,
-      height: 400,
       child: IndexedStack(
         index: stackIndex,
         key: ValueKey<int>(stackIndex),
@@ -71,84 +69,89 @@ class _JoinTeamStackState extends State<JoinTeamStack> {
         children: [
           Form(
             key:_formKey,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  "Enter your team code",
-                  style: GoogleFonts.ubuntu(
-                    fontSize: 25.0,
-                    fontWeight: FontWeight.w500
-                  )
-                ),
-                TextFormField(
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return "Please enter a valid code";
-                    }
+            child: SizedBox(
+              width: 500,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Enter your team code",
+                    style: GoogleFonts.ubuntu(
+                      fontSize: 25.0,
+                      fontWeight: FontWeight.w500
+                    )
+                  ),
+                  Container(
+                    child: TextFormField(
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return "Please enter a valid code";
+                        }
 
-                    if (value.length < 6) {
-                      setState(() {
-                        codeInput = value;
-                      });
-                      return "Team code must be 6 characters long";
-                    }
+                        if (value.length < 6) {
+                          setState(() {
+                            codeInput = value;
+                          });
+                          return "Team code must be 6 characters long";
+                        }
 
-                    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
-                    var message = "";
+                        const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+                        var message = "";
 
-                    value.split('').forEach((c) => !chars.contains(c) ? message = "Unexpected character: $c" : message = message);
-                    if (message.isNotEmpty) {
-                      setState(() {
-                        codeInput = value;
-                      });
-                      return message;
-                    }
+                        value.split('').forEach((c) => !chars.contains(c) ? message = "Unexpected character: $c" : message = message);
+                        if (message.isNotEmpty) {
+                          setState(() {
+                            codeInput = value;
+                          });
+                          return message;
+                        }
 
 
-                    //Everything from this point could be far more efficient. At the moment, it has to send two identical requests.
-                    fetchTeam(value).then((v) {
-                      setState(() {
-                        requestedTeam = fetchTeam(value);
-                        isTeamInitialized = true;
-                        codeInput = value;
-                        stackIndex += 1;
-                      });
-                      return v;
-                    }).onError((error, stackTrace) {
-                      return fetchTeam(value);
-                    });
+                        //Everything from this point could be far more efficient. At the moment, it has to send two identical requests.
+                        fetchTeam(value).then((v) {
+                          setState(() {
+                            requestedTeam = fetchTeam(value);
+                            isTeamInitialized = true;
+                            codeInput = value;
+                            stackIndex += 1;
+                          });
+                          return v;
+                        }).onError((error, stackTrace) {
+                          return fetchTeam(value);
+                        });
 
-                    return "Please enter a valid code";
-                  },
+                        return "Please enter a valid code";
+                      },
 
-                  inputFormatters: [
-                    LengthLimitingTextInputFormatter(6),
-                    UpperCaseTextFormatter()
-                  ],
-                  textAlign: TextAlign.center,
-                  decoration: InputDecoration(
-                    labelText: "Eg. AX3D70",
-                    labelStyle: GoogleFonts.ubuntu(),
-                    focusedBorder: const UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.deepPurpleAccent)
-                    ),
-                    floatingLabelStyle: GoogleFonts.ubuntu(
-                      color: Colors.deepPurpleAccent
+                      inputFormatters: [
+                        LengthLimitingTextInputFormatter(6),
+                        UpperCaseTextFormatter()
+                      ],
+                      textAlign: TextAlign.center,
+                      decoration: InputDecoration(
+                        labelText: "Eg. AX3D70",
+                        labelStyle: GoogleFonts.ubuntu(),
+                        focusedBorder: const UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.deepPurpleAccent)
+                        ),
+                        floatingLabelStyle: GoogleFonts.ubuntu(
+                          color: Colors.deepPurpleAccent
+                        ),
+                      ),
                     ),
                   ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(15.0),
-                      child: IconButton(onPressed: () => _formKey.currentState!.validate(),
-                          icon: const Icon(Icons.arrow_forward)),
-                    ),
-                  ],
-                )
-              ],
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: IconButton(onPressed: () => _formKey.currentState!.validate(),
+                            icon: const Icon(Icons.arrow_forward)),
+                      ),
+                    ],
+                  )
+                ],
+              ),
             ),
           ),
 
@@ -163,16 +166,19 @@ class _JoinTeamStackState extends State<JoinTeamStack> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Padding(
                             padding: const EdgeInsets.all(40.0),
-                            child: Text(
-                              snapshot.data!.title,
-                              textAlign: TextAlign.center,
-                              style: GoogleFonts.ubuntu(
-                                fontSize: 60.0,
-                                fontWeight: FontWeight.w500,
-                              )
+                            child: Flexible(
+                              child: Text(
+                                snapshot.data!.title,
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.ubuntu(
+                                  fontSize: 60.0,
+                                  fontWeight: FontWeight.w500,
+                                )
+                              ),
                             ),
                           ),
                           ElevatedButton(
