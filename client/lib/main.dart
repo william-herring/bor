@@ -16,14 +16,35 @@ class App extends StatelessWidget {
   @override
   Widget build(context) {
     return MaterialApp(
-      initialRoute: isLoggedOut ? '/join' : '/teams', //join to be replaced by login
+      //initialRoute: isLoggedOut ? '/join' : '/teams', //join to be replaced by login
+      onGenerateRoute: (settings) {
+        String route = settings.name as String;
+
+        if (route.startsWith('/join/')) {
+          String code = route.split('/join/')[1];
+          if (code.isEmpty) {
+            return MaterialPageRoute(
+                builder: (context) {
+                  return const JoinTeamScreen();
+                }
+            );
+          }
+
+          return MaterialPageRoute(
+              builder: (context) {
+                return JoinTeamScreen(code: code);
+              }
+          );
+        }
+      },
 
       title: 'Bor',
       debugShowCheckedModeBanner: false,
       routes: {
         '/teams': (context) => const TeamScreen(),
-        '/join': (context) => const JoinTeamScreen(),
       },
+
+      home: const JoinTeamScreen(), //Temporary
     );
   }
 }

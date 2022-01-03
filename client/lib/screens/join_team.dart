@@ -9,7 +9,9 @@ class JoinTeamScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(code);
+    var route = ModalRoute.of(context)?.settings.name;
+
+    print(route);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
