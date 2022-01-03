@@ -1,7 +1,4 @@
 from rest_framework.serializers import ModelSerializer
-from django.contrib.auth.models import User
-from rest_framework.validators import UniqueTogetherValidator
-
 from .models import Team
 
 
