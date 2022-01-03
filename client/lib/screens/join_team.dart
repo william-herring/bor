@@ -9,9 +9,8 @@ class JoinTeamScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var route = ModalRoute.of(context)?.settings.name;
+    print(code + code.isEmpty.toString());
 
-    print(route);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -31,7 +30,7 @@ class JoinTeamScreen extends StatelessWidget {
       ),
 
       body: Center(
-        child: code.isEmpty? const JoinTeamStack() : Text(code),
+        child: code.isEmpty? const JoinTeamStack() : JoinTeamStack(code: code),
       )
     );
   }

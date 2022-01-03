@@ -7,11 +7,25 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 
+Future<Team> fetchTeam(code) async {
+  final response = await http.get(
+      Uri.parse(port + "/api/get-team?code=$code"),
+      headers: { 'Content-Type': 'application/json' }
+  );
+
+  if (response.statusCode == 200) {
+    return Team.fromJson(jsonDecode(response.body));
+  }
+
+  throw Exception('Failed to load team data');
+}
+
 class JoinTeamStack extends StatefulWidget {
-  const JoinTeamStack({Key? key}) : super(key: key);
+  final String code;
+  const JoinTeamStack({Key? key, this.code = ""}) : super(key: key);
 
   @override
-  _JoinTeamStackState createState() => _JoinTeamStackState();
+  _JoinTeamStackState createState() => _JoinTeamStackState(codeInput: code);
 }
 
 class _JoinTeamStackState extends State<JoinTeamStack> {
@@ -20,18 +34,22 @@ class _JoinTeamStackState extends State<JoinTeamStack> {
   final _formKey = GlobalKey<FormState>();
   late Future<Team> requestedTeam;
   bool isTeamInitialized = false;
+  bool codeNotFound = false;
+  
+  _JoinTeamStackState({this.codeInput = ""});
 
-  Future<Team> fetchTeam(code) async {
-    final response = await http.get(
-        Uri.parse(port + "/api/get-team?code=$code"),
-        headers: { 'Content-Type': 'application/json' }
-    );
+  @override
+  void initState() {
+    super.initState();
 
-    if (response.statusCode == 200) {
-      return Team.fromJson(jsonDecode(response.body));
+    if (codeInput.isNotEmpty) {
+      requestedTeam = fetchTeam(codeInput).onError((error, stackTrace) {
+        codeNotFound = true;
+        return fetchTeam(codeInput);
+      });
+      stackIndex = 1;
+      isTeamInitialized = true;
     }
-
-    throw Exception('Failed to load team data');
   }
 
   String getTeamCode() {
@@ -140,7 +158,7 @@ class _JoinTeamStackState extends State<JoinTeamStack> {
           isTeamInitialized? FutureBuilder<Team>(
               future: requestedTeam,
               builder: (context, snapshot) {
-                if (snapshot.hasData) {
+                if (snapshot.hasData && !codeNotFound) {
                   return Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -153,7 +171,7 @@ class _JoinTeamStackState extends State<JoinTeamStack> {
                               textAlign: TextAlign.center,
                               style: GoogleFonts.ubuntu(
                                 fontSize: 60.0,
-                                fontWeight: FontWeight.bold,
+                                fontWeight: FontWeight.w500,
                               )
                             ),
                           ),
@@ -176,10 +194,30 @@ class _JoinTeamStackState extends State<JoinTeamStack> {
                       ),
                     ],
                   );
-                } else if (snapshot.hasError) {
-                  setState(() {
-                    stackIndex = 0;
-                  });
+                } else if (codeNotFound) {
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Column(
+                        children: [
+                          Text(
+                            "404 Not Found",
+                            style: GoogleFonts.ubuntu(
+                              fontSize: 25.0,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          Text(
+                            "Oops - are you sure that is a valid code?",
+                            style: GoogleFonts.ubuntu(
+                                fontSize: 12.0,
+                                fontWeight: FontWeight.normal,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  );
                 }
 
                 return const CircularProgressIndicator(color: Colors.deepPurpleAccent);
