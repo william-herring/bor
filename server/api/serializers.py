@@ -15,3 +15,9 @@ class CreateTeamSerializer(ModelSerializer):
     class Meta:
         model = Team
         fields = ('leader', 'title')
+
+
+class UpdateTeamSerializer(ModelSerializer):
+    class Meta:
+        model = Team
+        fields = ('title', 'leader', 'code')

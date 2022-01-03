@@ -42,9 +42,8 @@ class App extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       routes: {
         '/teams': (context) => const TeamScreen(),
+        '/join': (context) => const JoinTeamScreen()
       },
-
-      home: const JoinTeamScreen(), //Temporary
     );
   }
 }
