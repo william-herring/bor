@@ -107,17 +107,17 @@ class _JoinTeamStackState extends State<JoinTeamStack> {
                         }
 
 
-                        //Everything from this point could be far more efficient. At the moment, it has to send two identical requests.
-                        fetchTeam(value).then((v) {
+                        var fetched = fetchTeam(value);
+                        fetched.then((v) {
                           setState(() {
-                            requestedTeam = fetchTeam(value);
+                            requestedTeam = fetched;
                             isTeamInitialized = true;
                             codeInput = value;
                             stackIndex += 1;
                           });
                           return v;
                         }).onError((error, stackTrace) {
-                          return fetchTeam(value);
+                          return fetched;
                         });
 
                         return "Please enter a valid code";
