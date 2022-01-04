@@ -1,5 +1,6 @@
 import 'package:bor/screens/join_team.dart';
 import 'package:bor/screens/teams.dart';
+import 'package:bor/screens/login.dart';
 import 'package:flutter/material.dart';
 
 bool isLoggedOut = true;
@@ -16,7 +17,7 @@ class App extends StatelessWidget {
   @override
   Widget build(context) {
     return MaterialApp(
-      initialRoute: isLoggedOut ? '/join' : '/teams', //join to be replaced by login
+      initialRoute: isLoggedOut ? '/login' : '/teams', //join to be replaced by login
       onGenerateRoute: (settings) {
         String route = settings.name as String;
 
@@ -42,7 +43,8 @@ class App extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       routes: {
         '/teams': (context) => const TeamScreen(),
-        '/join': (context) => const JoinTeamScreen()
+        '/join': (context) => const JoinTeamScreen(),
+        '/login': (context) => const LoginScreen()
       },
     );
   }
