@@ -1,4 +1,6 @@
 # Bor
+<img src="https://img.shields.io/github/stars/william-herring/bor"> <img src="https://img.shields.io/github/forks/william-herring/bor"> <img src="https://img.shields.io/github/issues/william-herring/bor"> <img src="https://img.shields.io/github/license/william-herring/bor">
+
 
 Bor is an app for managing projects in a team of any size.
 The app offers many tools and features to create a tailored
