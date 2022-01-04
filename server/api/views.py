@@ -1,10 +1,24 @@
-from rest_framework.generics import ListAPIView
+from rest_framework.generics import ListAPIView, CreateAPIView
 from rest_framework.views import APIView
+from rest_framework import permissions
 from .models import Team
 from rest_framework.status import *
 from rest_framework.response import Response
-
+from django.contrib.auth.models import User
 from .serializers import *
+
+
+class UserView(ListAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+
+class CreateUserView(CreateAPIView):
+    model = User
+    serializer_class = UserSerializer
+    permission_classes = [
+        permissions.AllowAny  # This allows unauthenticated users to register an account
+    ]
 
 
 class TeamView(ListAPIView):

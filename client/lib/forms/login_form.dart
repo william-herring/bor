@@ -39,7 +39,7 @@ class _LoginFormState extends State<LoginForm> {
               autocorrect: false,
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return "Please enter a valid username";
+                  return "Required field.";
                 }
 
                 if (value.isNotEmpty) {
@@ -47,8 +47,6 @@ class _LoginFormState extends State<LoginForm> {
                     userInput = value;
                   });
                 }
-
-                return "Please enter a valid username";
               },
               textAlign: TextAlign.center,
               decoration: InputDecoration(
@@ -63,13 +61,6 @@ class _LoginFormState extends State<LoginForm> {
               ),
 
             ),
-            Text(
-              "",
-                style: GoogleFonts.ubuntu(
-                    fontSize: 11.0,
-                    fontWeight: FontWeight.w500
-                )
-            ),
 
             TextFormField(
               enableSuggestions: false,
@@ -77,7 +68,7 @@ class _LoginFormState extends State<LoginForm> {
               obscureText: true,
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return "Please enter a valid password";
+                  return "Required field.";
                 }
 
                 if (value.isNotEmpty) {
