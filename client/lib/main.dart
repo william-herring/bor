@@ -17,7 +17,7 @@ class App extends StatelessWidget {
   @override
   Widget build(context) {
     return MaterialApp(
-      initialRoute: isLoggedOut ? '/login' : '/teams', //join to be replaced by login
+      initialRoute: isLoggedOut ? '/login' : '/teams',
       onGenerateRoute: (settings) {
         String route = settings.name as String;
 

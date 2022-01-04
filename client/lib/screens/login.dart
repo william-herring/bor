@@ -1,4 +1,4 @@
-import 'package:bor/nav/login_form.dart';
+import 'package:bor/forms/login_form.dart';
 import 'package:bor/objects/team_obj.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -26,8 +26,8 @@ class LoginScreen extends StatelessWidget {
           ),
         ),
 
-        body: Center(
-          child: const LoginForm(),
+        body: const Center(
+          child: LoginForm(),
         )
     );
   }

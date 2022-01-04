@@ -1,9 +1,4 @@
-import 'dart:convert';
-import 'package:animations/animations.dart';
-import 'package:bor/main.dart';
-import 'package:bor/objects/team_obj.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 
@@ -46,9 +41,9 @@ class _LoginFormState extends State<LoginForm> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  "",
+                  "Log in",
                   style: GoogleFonts.ubuntu(
-                    fontSize: 11.0,
+                    fontSize: 25.0,
                     fontWeight: FontWeight.w500
                   ),
                 ),
@@ -61,15 +56,10 @@ class _LoginFormState extends State<LoginForm> {
                       return "Please enter a valid username";
                     }
 
-
-                    var message = "";
-
-
                     if (value.isNotEmpty) {
                       setState(() {
                         userInput = value;
                       });
-                      return "You entered: " + value;//todo make something actually happen when you enter user/pass
                     }
 
                     return "Please enter a valid username";
@@ -108,8 +98,8 @@ class _LoginFormState extends State<LoginForm> {
                       setState(() {
                         passInput = value;
                       });
-                      return "You entered: " + value;
                     }
+
                     return "Please enter a valid password";
                   },
 
@@ -128,10 +118,39 @@ class _LoginFormState extends State<LoginForm> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
+                    GestureDetector(
+                      child: Container(
+                        margin: const EdgeInsets.all(15.0),
+                        child: Text(
+                          "Forgot password?",
+                          style: GoogleFonts.ubuntu(
+                            color: Colors.deepPurpleAccent,
+                          ),
+                        ),
+                      )
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
                     Padding(
-                      padding: const EdgeInsets.all(15.0),
-                      child: IconButton(onPressed: () => _formKey.currentState!.validate(),
-                          icon: const Icon(Icons.arrow_forward)),
+                      padding: const EdgeInsets.fromLTRB(15.0, 8.0, 15.0, 0.0),
+                      child: ElevatedButton(
+                        onPressed: () => _formKey.currentState!.validate(),
+                        child: Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: Text(
+                            "Log in",
+                            style: GoogleFonts.ubuntu(
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.deepPurpleAccent,
+                        ),
+                      )
                     ),
                   ],
                 )
