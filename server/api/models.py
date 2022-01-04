@@ -7,7 +7,7 @@ def generate_random_code():
     length = 6
 
     while True:
-        code = ''.join(random.choices(string.ascii_uppercase + string.digits, k=length))
+        code = random.choices(string.ascii_uppercase + string.digits, k=length)
         if Team.objects.filter(code=code).count() == 0:
             break
 

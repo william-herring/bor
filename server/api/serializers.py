@@ -1,7 +1,4 @@
 from rest_framework.serializers import ModelSerializer
-from django.contrib.auth.models import User
-from rest_framework.validators import UniqueTogetherValidator
-
 from .models import Team
 
 
@@ -15,3 +12,9 @@ class CreateTeamSerializer(ModelSerializer):
     class Meta:
         model = Team
         fields = ('leader', 'title')
+
+
+class UpdateTeamSerializer(ModelSerializer):
+    class Meta:
+        model = Team
+        fields = ('title', 'leader', 'code')
