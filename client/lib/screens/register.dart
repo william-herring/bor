@@ -25,20 +25,23 @@ class RegisterScreen extends StatelessWidget {
           ),
         ),
 
-        floatingActionButton: GestureDetector(
-            onTap: () {
-              Navigator.pushReplacementNamed(context, '/login');
-            },
+        floatingActionButton: MouseRegion(
+          cursor: SystemMouseCursors.click,
+          child: GestureDetector(
+              onTap: () {
+                Navigator.pushReplacementNamed(context, '/login');
+              },
 
-            child: Container(
-              margin: const EdgeInsets.fromLTRB(0.0, 15.0, 0, 15.0),
-              child: Text(
-                "Already have an account? Log in.",
-                style: GoogleFonts.ubuntu(
-                  color: Colors.deepPurpleAccent,
+              child: Container(
+                margin: const EdgeInsets.fromLTRB(0.0, 15.0, 0, 15.0),
+                child: Text(
+                  "Already have an account? Log in",
+                  style: GoogleFonts.ubuntu(
+                    color: Colors.deepPurpleAccent,
+                  ),
                 ),
-              ),
-            )
+              )
+          ),
         ),
 
         body: const Center(

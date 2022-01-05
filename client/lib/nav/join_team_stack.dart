@@ -97,7 +97,7 @@ class _JoinTeamStackState extends State<JoinTeamStack> {
                       const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
                       var message = "";
 
-                      value.split('').forEach((c) => !chars.contains(c) ? message = "Unexpected character: $c" : message = message);
+                      value.split('').forEach((c) => !chars.contains(c) ? message = "Unexpected character: $c" : message = message); // Replace with regular expression?
                       if (message.isNotEmpty) {
                         setState(() {
                           codeInput = value;

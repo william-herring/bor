@@ -1,3 +1,4 @@
+import 'package:bor/main.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
@@ -96,16 +97,19 @@ class _LoginFormState extends State<LoginForm> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
 
-                GestureDetector(
-                  child: Container(
-                    margin: const EdgeInsets.all(15.0),
-                    child: Text(
-                      "Forgot password?",
-                      style: GoogleFonts.ubuntu(
-                        color: Colors.deepPurpleAccent,
+                MouseRegion(
+                  cursor: SystemMouseCursors.click,
+                  child: GestureDetector(
+                    child: Container(
+                      margin: const EdgeInsets.all(15.0),
+                      child: Text(
+                        "Forgot password?",
+                        style: GoogleFonts.ubuntu(
+                          color: Colors.deepPurpleAccent,
+                        ),
                       ),
-                    ),
-                  )
+                    )
+                  ),
                 ),
               ],
             ),
@@ -115,7 +119,17 @@ class _LoginFormState extends State<LoginForm> {
                 Padding(
                   padding: const EdgeInsets.fromLTRB(15.0, 8.0, 15.0, 0.0),
                   child: ElevatedButton(
-                    onPressed: () => _formKey.currentState!.validate(),
+                    onPressed: () {
+                        _formKey.currentState!.validate();
+                        http.post(
+                            Uri.parse(serverPort + '/api-token-auth'),
+                            headers: { 'Content-Type': 'application/json' },
+                            body: {
+                              'username': userInput,
+                              'password': passInput,
+                            }
+                        );
+                      },
                     child: Padding(
                       padding: const EdgeInsets.all(12.0),
                       child: Text(

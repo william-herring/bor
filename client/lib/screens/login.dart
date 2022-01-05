@@ -26,20 +26,23 @@ class LoginScreen extends StatelessWidget {
           ),
         ),
 
-        floatingActionButton: GestureDetector(
-            onTap: () {
-              Navigator.pushReplacementNamed(context, '/register');
-            },
+        floatingActionButton: MouseRegion(
+          cursor: SystemMouseCursors.click,
+          child: GestureDetector(
+              onTap: () {
+                Navigator.pushReplacementNamed(context, '/register');
+              },
 
-            child: Container(
-              margin: const EdgeInsets.fromLTRB(0.0, 15.0, 0, 15.0),
-              child: Text(
-                "Create an account",
-                style: GoogleFonts.ubuntu(
-                  color: Colors.deepPurpleAccent,
+              child: Container(
+                margin: const EdgeInsets.fromLTRB(0.0, 15.0, 0, 15.0),
+                child: Text(
+                  "Create an account",
+                  style: GoogleFonts.ubuntu(
+                    color: Colors.deepPurpleAccent,
+                  ),
                 ),
-              ),
-            )
+              )
+          ),
         ),
 
         body: const Center(
