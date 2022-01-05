@@ -1,10 +1,9 @@
-import 'package:bor/forms/login_form.dart';
-import 'package:bor/objects/team_obj.dart';
+import 'package:bor/forms/register_form.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class LoginScreen extends StatelessWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+class RegisterScreen extends StatelessWidget {
+  const RegisterScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,13 +27,13 @@ class LoginScreen extends StatelessWidget {
 
         floatingActionButton: GestureDetector(
             onTap: () {
-              Navigator.pushReplacementNamed(context, '/register');
+              Navigator.pushReplacementNamed(context, '/login');
             },
 
             child: Container(
               margin: const EdgeInsets.fromLTRB(0.0, 15.0, 0, 15.0),
               child: Text(
-                "Create an account",
+                "Already have an account? Log in.",
                 style: GoogleFonts.ubuntu(
                   color: Colors.deepPurpleAccent,
                 ),
@@ -43,7 +42,7 @@ class LoginScreen extends StatelessWidget {
         ),
 
         body: const Center(
-          child: LoginForm(),
+          child: RegisterForm(),
         )
     );
   }

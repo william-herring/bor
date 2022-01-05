@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 
-class LoginForm extends StatefulWidget {
-  const LoginForm({Key? key}) : super(key: key);
+class RegisterForm extends StatefulWidget {
+  const RegisterForm({Key? key}) : super(key: key);
 
   @override
-  _LoginFormState createState() => _LoginFormState();
+  _RegisterFormState createState() => _RegisterFormState();
 }
 
-class _LoginFormState extends State<LoginForm> {
+class _RegisterFormState extends State<RegisterForm> {
+  String emailInput = "";
   String userInput = "";
   String passInput = "";
   final _formKey = GlobalKey<FormState>();
@@ -27,11 +28,39 @@ class _LoginFormState extends State<LoginForm> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              "Log in",
+              "Create an account",
               style: GoogleFonts.ubuntu(
-                fontSize: 25.0,
-                fontWeight: FontWeight.w500
+                  fontSize: 25.0,
+                  fontWeight: FontWeight.w500
               ),
+            ),
+
+            TextFormField(
+              enableSuggestions: false,
+              autocorrect: false,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return "Required field.";
+                }
+
+                if (value.isNotEmpty) {
+                  setState(() {
+                    emailInput = value;
+                  });
+                }
+              },
+              textAlign: TextAlign.center,
+              decoration: InputDecoration(
+                labelText: "Email",
+                labelStyle: GoogleFonts.ubuntu(),
+                focusedBorder: const UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.deepPurpleAccent)
+                ),
+                floatingLabelStyle: GoogleFonts.ubuntu(
+                    color: Colors.deepPurpleAccent
+                ),
+              ),
+
             ),
 
             TextFormField(
@@ -53,10 +82,10 @@ class _LoginFormState extends State<LoginForm> {
                 labelText: "Username",
                 labelStyle: GoogleFonts.ubuntu(),
                 focusedBorder: const UnderlineInputBorder(
-                  borderSide: BorderSide(color: Colors.deepPurpleAccent)
+                    borderSide: BorderSide(color: Colors.deepPurpleAccent)
                 ),
                 floatingLabelStyle: GoogleFonts.ubuntu(
-                  color: Colors.deepPurpleAccent
+                    color: Colors.deepPurpleAccent
                 ),
               ),
 
@@ -95,40 +124,23 @@ class _LoginFormState extends State<LoginForm> {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-
-                GestureDetector(
-                  child: Container(
-                    margin: const EdgeInsets.all(15.0),
-                    child: Text(
-                      "Forgot password?",
-                      style: GoogleFonts.ubuntu(
-                        color: Colors.deepPurpleAccent,
-                      ),
-                    ),
-                  )
-                ),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(15.0, 8.0, 15.0, 0.0),
-                  child: ElevatedButton(
-                    onPressed: () => _formKey.currentState!.validate(),
-                    child: Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: Text(
-                        "Log in",
-                        style: GoogleFonts.ubuntu(
-                          color: Colors.white,
+                    padding: const EdgeInsets.fromLTRB(15.0, 23.0, 15.0, 0.0),
+                    child: ElevatedButton(
+                      onPressed: () => _formKey.currentState!.validate(),
+                      child: Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: Text(
+                          "Register",
+                          style: GoogleFonts.ubuntu(
+                            color: Colors.white,
+                          ),
                         ),
                       ),
-                    ),
-                    style: ElevatedButton.styleFrom(
-                      primary: Colors.deepPurpleAccent,
-                    ),
-                  )
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.deepPurpleAccent,
+                      ),
+                    )
                 ),
               ],
             )
@@ -138,4 +150,3 @@ class _LoginFormState extends State<LoginForm> {
     );
   }
 }
-
