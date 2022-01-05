@@ -15,7 +15,6 @@ class _RegisterFormState extends State<RegisterForm> {
   String passInput = "";
   final _formKey = GlobalKey<FormState>();
 
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -91,35 +90,79 @@ class _RegisterFormState extends State<RegisterForm> {
 
             ),
 
-            TextFormField(
-              enableSuggestions: false,
-              autocorrect: false,
-              obscureText: true,
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return "Required field.";
-                }
+            Row(
+              children: [
+                Flexible(
+                  child: Container(
+                    margin: const EdgeInsets.only(right: 6),
+                    child: TextFormField(
+                      enableSuggestions: false,
+                      autocorrect: false,
+                      obscureText: true,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return "Required field.";
+                        }
 
-                if (value.isNotEmpty) {
-                  setState(() {
-                    passInput = value;
-                  });
-                }
+                        if (value.isNotEmpty) {
+                          setState(() {
+                            passInput = value;
+                          });
+                        }
 
-                return "Please enter a valid password";
-              },
+                        return "Please enter a valid password";
+                      },
 
-              textAlign: TextAlign.center,
-              decoration: InputDecoration(
-                labelText: "Password",
-                labelStyle: GoogleFonts.ubuntu(),
-                focusedBorder: const UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.deepPurpleAccent)
+                      textAlign: TextAlign.center,
+                      decoration: InputDecoration(
+                        labelText: "Password",
+                        labelStyle: GoogleFonts.ubuntu(),
+                        focusedBorder: const UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.deepPurpleAccent)
+                        ),
+                        floatingLabelStyle: GoogleFonts.ubuntu(
+                            color: Colors.deepPurpleAccent
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
-                floatingLabelStyle: GoogleFonts.ubuntu(
-                    color: Colors.deepPurpleAccent
+                Flexible(
+                  child: Container(
+                    margin: const EdgeInsets.only(left: 6),
+                    child: TextFormField(
+                      enableSuggestions: false,
+                      autocorrect: false,
+                      obscureText: true,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return "Required field.";
+                        }
+
+                        if (value.isNotEmpty) {
+                          setState(() {
+                            passInput = value;
+                          });
+                        }
+
+                        return "Please enter a valid password";
+                      },
+
+                      textAlign: TextAlign.center,
+                      decoration: InputDecoration(
+                        labelText: "Password (again)",
+                        labelStyle: GoogleFonts.ubuntu(),
+                        focusedBorder: const UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.deepPurpleAccent)
+                        ),
+                        floatingLabelStyle: GoogleFonts.ubuntu(
+                            color: Colors.deepPurpleAccent
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
-              ),
+              ],
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,

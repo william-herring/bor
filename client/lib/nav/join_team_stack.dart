@@ -81,62 +81,60 @@ class _JoinTeamStackState extends State<JoinTeamStack> {
                       fontWeight: FontWeight.w500
                     )
                   ),
-                  Container(
-                    child: TextFormField(
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return "Please enter a valid code";
-                        }
-
-                        if (value.length < 6) {
-                          setState(() {
-                            codeInput = value;
-                          });
-                          return "Team code must be 6 characters long";
-                        }
-
-                        const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
-                        var message = "";
-
-                        value.split('').forEach((c) => !chars.contains(c) ? message = "Unexpected character: $c" : message = message);
-                        if (message.isNotEmpty) {
-                          setState(() {
-                            codeInput = value;
-                          });
-                          return message;
-                        }
-
-
-                        var fetched = fetchTeam(value);
-                        fetched.then((v) {
-                          setState(() {
-                            requestedTeam = fetched;
-                            isTeamInitialized = true;
-                            codeInput = value;
-                            stackIndex += 1;
-                          });
-                          return v;
-                        }).onError((error, stackTrace) {
-                          return fetched;
-                        });
-
+                  TextFormField(
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
                         return "Please enter a valid code";
-                      },
+                      }
 
-                      inputFormatters: [
-                        LengthLimitingTextInputFormatter(6),
-                        UpperCaseTextFormatter()
-                      ],
-                      textAlign: TextAlign.center,
-                      decoration: InputDecoration(
-                        labelText: "Eg. AX3D70",
-                        labelStyle: GoogleFonts.ubuntu(),
-                        focusedBorder: const UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.deepPurpleAccent)
-                        ),
-                        floatingLabelStyle: GoogleFonts.ubuntu(
-                          color: Colors.deepPurpleAccent
-                        ),
+                      if (value.length < 6) {
+                        setState(() {
+                          codeInput = value;
+                        });
+                        return "Team code must be 6 characters long";
+                      }
+
+                      const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+                      var message = "";
+
+                      value.split('').forEach((c) => !chars.contains(c) ? message = "Unexpected character: $c" : message = message);
+                      if (message.isNotEmpty) {
+                        setState(() {
+                          codeInput = value;
+                        });
+                        return message;
+                      }
+
+
+                      var fetched = fetchTeam(value);
+                      fetched.then((v) {
+                        setState(() {
+                          requestedTeam = fetched;
+                          isTeamInitialized = true;
+                          codeInput = value;
+                          stackIndex += 1;
+                        });
+                        return v;
+                      }).onError((error, stackTrace) {
+                        return fetched;
+                      });
+
+                      return "Please enter a valid code";
+                    },
+
+                    inputFormatters: [
+                      LengthLimitingTextInputFormatter(6),
+                      UpperCaseTextFormatter()
+                    ],
+                    textAlign: TextAlign.center,
+                    decoration: InputDecoration(
+                      labelText: "Eg. AX3D70",
+                      labelStyle: GoogleFonts.ubuntu(),
+                      focusedBorder: const UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.deepPurpleAccent)
+                      ),
+                      floatingLabelStyle: GoogleFonts.ubuntu(
+                        color: Colors.deepPurpleAccent
                       ),
                     ),
                   ),
