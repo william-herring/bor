@@ -9,6 +9,10 @@ from .serializers import *
 
 
 class UserView(ListAPIView):
+    permission_classes = [
+        permissions.IsAdminUser
+    ]
+
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
@@ -24,10 +28,16 @@ class CreateUserView(CreateAPIView):
 class TeamView(ListAPIView):
     queryset = Team.objects.all()
     serializer_class = TeamSerializer
+    permission_classes = [
+        permissions.IsAdminUser
+    ]
 
 
 class CreateTeamView(APIView):
     serializer_class = CreateTeamSerializer
+    permission_classes = [
+        permissions.IsAuthenticated
+    ]
 
     def post(self, request, format=None):
         if not self.request.session.exists(self.request.session.session_key):
@@ -49,6 +59,9 @@ class CreateTeamView(APIView):
 # that of the team leader.
 class UpdateTeamView(APIView):
     serializer_class = UpdateTeamSerializer
+    permission_classes = [
+        permissions.IsAuthenticated
+    ]
 
     def patch(self, request, format=None):
         serializer = self.serializer_class(data=request.data)
@@ -73,6 +86,9 @@ class UpdateTeamView(APIView):
 # that of the team leader.
 class DeleteTeamView(APIView):
     lookup_url_kwarg = 'code'
+    permission_classes = [
+        permissions.IsAuthenticated
+    ]
 
     def post(self, request, format=None):
         code = request.data.get(self.lookup_url_kwarg)
@@ -89,6 +105,9 @@ class DeleteTeamView(APIView):
 
 class JoinTeamView(APIView):
     lookup_url_kwarg = 'code'
+    permission_classes = [
+        permissions.IsAuthenticated
+    ]
 
     def post(self, request, format=None):
         if not self.request.session.exists(self.request.session.session_key):
@@ -110,6 +129,10 @@ class JoinTeamView(APIView):
 class GetTeamView(APIView):
     serializer_class = TeamSerializer
     lookup_url_kwarg = 'code'
+    permission_classes = [
+        permissions.AllowAny  # get-team requires no authentication,
+        # because it does not require a user to be logged in.
+    ]
 
     def get(self, request, format=None):
         code = request.GET.get(self.lookup_url_kwarg)
