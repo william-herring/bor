@@ -14,6 +14,9 @@ class _RegisterFormState extends State<RegisterForm> {
   String userInput = "";
   String passInput = "";
   final _formKey = GlobalKey<FormState>();
+  FocusNode userNode = FocusNode();
+  FocusNode pass1Node = FocusNode();
+  FocusNode pass2Node = FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +40,7 @@ class _RegisterFormState extends State<RegisterForm> {
             TextFormField(
               enableSuggestions: false,
               autocorrect: false,
+              onFieldSubmitted: (value){userNode.requestFocus();},
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return "Required field.";
@@ -63,6 +67,8 @@ class _RegisterFormState extends State<RegisterForm> {
             ),
 
             TextFormField(
+              focusNode: userNode,
+              onFieldSubmitted: (value){pass1Node.requestFocus();},
               enableSuggestions: false,
               autocorrect: false,
               validator: (value) {
@@ -96,6 +102,8 @@ class _RegisterFormState extends State<RegisterForm> {
                   child: Container(
                     margin: const EdgeInsets.only(right: 6),
                     child: TextFormField(
+                      focusNode: pass1Node,
+                      onFieldSubmitted: (value){pass2Node.requestFocus();},
                       enableSuggestions: false,
                       autocorrect: false,
                       obscureText: true,
@@ -131,6 +139,10 @@ class _RegisterFormState extends State<RegisterForm> {
                   child: Container(
                     margin: const EdgeInsets.only(left: 6),
                     child: TextFormField(
+                      focusNode: pass2Node,
+                      onFieldSubmitted: (value){
+                        _formKey.currentState!.validate();//please note that this may not be ideal (it's copy pasted from button meaning to change that you need to edit it twice)
+                      },
                       enableSuggestions: false,
                       autocorrect: false,
                       obscureText: true,

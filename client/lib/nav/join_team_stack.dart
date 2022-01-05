@@ -82,6 +82,9 @@ class _JoinTeamStackState extends State<JoinTeamStack> {
                     )
                   ),
                   TextFormField(
+                    onFieldSubmitted: (value){
+                      _formKey.currentState!.validate();
+                    },
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return "Please enter a valid code";

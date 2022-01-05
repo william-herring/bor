@@ -14,6 +14,7 @@ class _LoginFormState extends State<LoginForm> {
   String userInput = "";
   String passInput = "";
   final _formKey = GlobalKey<FormState>();
+  FocusNode passwordField = FocusNode();
 
 
   @override
@@ -38,6 +39,7 @@ class _LoginFormState extends State<LoginForm> {
             TextFormField(
               enableSuggestions: false,
               autocorrect: false,
+              onFieldSubmitted: (value ) {passwordField.requestFocus();},
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return "Required field.";
@@ -64,9 +66,20 @@ class _LoginFormState extends State<LoginForm> {
             ),
 
             TextFormField(
+              focusNode: passwordField,
               enableSuggestions: false,
               autocorrect: false,
               obscureText: true,
+              onFieldSubmitted: (value) {
+                _formKey.currentState!.validate();
+                http.post(
+                    Uri.parse(serverPort + '/api-token-auth'),
+                    headers: { 'Content-Type': 'application/json' },
+                    body: {
+                      'username': userInput,
+                      'password': passInput,
+                    }
+                );},
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return "Required field.";
