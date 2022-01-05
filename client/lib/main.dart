@@ -4,9 +4,9 @@ import 'package:bor/screens/teams.dart';
 import 'package:bor/screens/login.dart';
 import 'package:flutter/material.dart';
 
-bool isLoggedOut = true;
-const port = "http://127.0.0.1:8000";
-const dev = true;
+bool isLoggedOut = true; //To be replaced by token auth
+const serverPort = "http://127.0.0.1:8000";
+const dev = true; // REMOVE IN PRODUCTION
 
 void main() {
   runApp(const App());

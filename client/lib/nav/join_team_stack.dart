@@ -9,7 +9,7 @@ import 'package:http/http.dart' as http;
 
 Future<Team> fetchTeam(code) async {
   final response = await http.get(
-      Uri.parse(port + "/api/get-team?code=$code"),
+      Uri.parse(serverPort + "/api/get-team?code=$code"),
       headers: { 'Content-Type': 'application/json' }
   );
 
