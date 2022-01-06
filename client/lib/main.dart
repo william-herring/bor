@@ -2,6 +2,7 @@ import 'package:bor/screens/join_team.dart';
 import 'package:bor/screens/register.dart';
 import 'package:bor/screens/teams.dart';
 import 'package:bor/screens/login.dart';
+import 'package:bor/views/login-register-view.dart';
 import 'package:flutter/material.dart';
 
 var token;
@@ -45,8 +46,8 @@ class App extends StatelessWidget {
       routes: {
         '/teams': (context) => const TeamScreen(),
         '/join': (context) => const JoinTeamScreen(),
-        '/login': (context) => const LoginScreen(),
-        '/register': (context) => const RegisterScreen(),
+        '/login': (context) => LoginRegisterView(viewIndex: 0),
+        '/register': (context) => LoginRegisterView(viewIndex: 1),
       },
     );
   }

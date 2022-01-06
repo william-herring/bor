@@ -3,34 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class RegisterScreen extends StatelessWidget {
-  const RegisterScreen({Key? key}) : super(key: key);
+  final Function switchView;
+  const RegisterScreen({Key? key, required this.switchView}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          leadingWidth: 400,
-          leading: Container(
-            margin: const EdgeInsets.all(5),
-            child: Text(
-              "Bor",
-              style: GoogleFonts.ubuntu(
-                  color: Colors.deepPurpleAccent,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 46
-              ),
-            ),
-          ),
-        ),
-
         floatingActionButton: MouseRegion(
           cursor: SystemMouseCursors.click,
           child: GestureDetector(
-              onTap: () {
-                Navigator.pushReplacementNamed(context, '/login');
-              },
+              onTap: () => switchView(),
 
               child: Container(
                 margin: const EdgeInsets.fromLTRB(0.0, 15.0, 0, 15.0),

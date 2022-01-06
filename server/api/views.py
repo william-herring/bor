@@ -130,8 +130,7 @@ class GetTeamView(APIView):
     serializer_class = TeamSerializer
     lookup_url_kwarg = 'code'
     permission_classes = [
-        permissions.AllowAny  # get-team requires no authentication,
-        # because it does not require a user to be logged in.
+        permissions.IsAuthenticated,
     ]
 
     def get(self, request, format=None):
