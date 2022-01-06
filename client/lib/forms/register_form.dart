@@ -1,3 +1,7 @@
+import 'dart:convert';
+
+import 'package:bor/forms/validators.dart';
+import 'package:bor/main.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
@@ -17,6 +21,21 @@ class _RegisterFormState extends State<RegisterForm> {
   FocusNode userNode = FocusNode();
   FocusNode pass1Node = FocusNode();
   FocusNode pass2Node = FocusNode();
+
+  void handleSubmit() {
+    _formKey.currentState!.validate();
+    http.post(
+        Uri.parse(serverPort + "/api/create-user"),
+        headers: { 'Content-Type': 'application/json' },
+        body: jsonEncode({
+          'email': emailInput,
+          'username': userInput,
+          'password': passInput,
+        })
+    );
+
+    print("submitted");
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,6 +66,10 @@ class _RegisterFormState extends State<RegisterForm> {
                 }
 
                 if (value.isNotEmpty) {
+                  var message = validateEmail(value);
+
+                  if (message != null) { return message; }
+
                   setState(() {
                     emailInput = value;
                   });
@@ -116,9 +139,9 @@ class _RegisterFormState extends State<RegisterForm> {
                           setState(() {
                             passInput = value;
                           });
+                        } else {
+                          return "Please enter a valid password";
                         }
-
-                        return "Please enter a valid password";
                       },
 
                       textAlign: TextAlign.center,
@@ -140,9 +163,7 @@ class _RegisterFormState extends State<RegisterForm> {
                     margin: const EdgeInsets.only(left: 6),
                     child: TextFormField(
                       focusNode: pass2Node,
-                      onFieldSubmitted: (value){
-                        _formKey.currentState!.validate();//please note that this may not be ideal (it's copy pasted from button meaning to change that you need to edit it twice)
-                      },
+                      onFieldSubmitted: (value) => handleSubmit(),
                       enableSuggestions: false,
                       autocorrect: false,
                       obscureText: true,
@@ -155,9 +176,9 @@ class _RegisterFormState extends State<RegisterForm> {
                           setState(() {
                             passInput = value;
                           });
+                        } else {
+                          return "Please enter a valid password";
                         }
-
-                        return "Please enter a valid password";
                       },
 
                       textAlign: TextAlign.center,
@@ -182,7 +203,7 @@ class _RegisterFormState extends State<RegisterForm> {
                 Padding(
                     padding: const EdgeInsets.fromLTRB(15.0, 23.0, 15.0, 0.0),
                     child: ElevatedButton(
-                      onPressed: () => _formKey.currentState!.validate(),
+                      onPressed: () => handleSubmit(),
                       child: Padding(
                         padding: const EdgeInsets.all(12.0),
                         child: Text(

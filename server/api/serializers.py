@@ -9,6 +9,7 @@ class UserSerializer(ModelSerializer):
     def create(self, validated_data):
 
         user = User.objects.create_user(
+            email=validated_data['email'],
             username=validated_data['username'],
             password=validated_data['password'],
         )
@@ -17,7 +18,7 @@ class UserSerializer(ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('id', 'username', 'password')
+        fields = ('id', 'username', 'password', 'email')
 
 
 class TeamSerializer(ModelSerializer):
