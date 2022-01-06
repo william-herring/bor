@@ -1,10 +1,11 @@
-from rest_framework.serializers import ModelSerializer, CharField
+from rest_framework.serializers import ModelSerializer, CharField, EmailField
 from .models import Team
 from django.contrib.auth.models import User
 
 
 class UserSerializer(ModelSerializer):
     password = CharField(write_only=True)
+    email = EmailField()
 
     def create(self, validated_data):
 

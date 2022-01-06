@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:bor/main.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -15,6 +17,21 @@ class _LoginFormState extends State<LoginForm> {
   String passInput = "";
   final _formKey = GlobalKey<FormState>();
   FocusNode passwordField = FocusNode();
+
+  void handleSubmit() {
+    _formKey.currentState!.validate();
+    http.post(
+        Uri.parse(serverPort + "/api-token-auth/"),
+        headers: { 'Content-Type': 'application/json' },
+        body: jsonEncode({
+          'username': userInput,
+          'password': passInput,
+        })
+    ).then((value) {
+      token = json.decode(value.body)['token'];
+      //Redirect to home page
+    });
+  }
 
 
   @override
@@ -70,16 +87,7 @@ class _LoginFormState extends State<LoginForm> {
               enableSuggestions: false,
               autocorrect: false,
               obscureText: true,
-              onFieldSubmitted: (value) {
-                _formKey.currentState!.validate();
-                http.post(
-                    Uri.parse(serverPort + '/api-token-auth'),
-                    headers: { 'Content-Type': 'application/json' },
-                    body: {
-                      'username': userInput,
-                      'password': passInput,
-                    }
-                );},
+              onFieldSubmitted: (value) => handleSubmit(),
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return "Required field.";
@@ -90,8 +98,6 @@ class _LoginFormState extends State<LoginForm> {
                     passInput = value;
                   });
                 }
-
-                return "Please enter a valid password";
               },
 
               textAlign: TextAlign.center,
@@ -132,17 +138,7 @@ class _LoginFormState extends State<LoginForm> {
                 Padding(
                   padding: const EdgeInsets.fromLTRB(15.0, 8.0, 15.0, 0.0),
                   child: ElevatedButton(
-                    onPressed: () {
-                        _formKey.currentState!.validate();
-                        http.post(
-                            Uri.parse(serverPort + '/api-token-auth'),
-                            headers: { 'Content-Type': 'application/json' },
-                            body: {
-                              'username': userInput,
-                              'password': passInput,
-                            }
-                        );
-                      },
+                    onPressed: () => handleSubmit(),
                     child: Padding(
                       padding: const EdgeInsets.all(12.0),
                       child: Text(

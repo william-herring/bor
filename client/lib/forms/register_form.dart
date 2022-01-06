@@ -34,7 +34,17 @@ class _RegisterFormState extends State<RegisterForm> {
         })
     );
 
-    print("submitted");
+    http.post(
+      Uri.parse(serverPort + "/api-token-auth/"),
+      headers: { 'Content-Type': 'application/json' },
+      body: jsonEncode({
+        'username': userInput,
+        'password': passInput,
+      })
+    ).then((value) {
+      token = json.decode(value.body)['token'];
+      //Redirect to home page
+    });
   }
 
   @override
