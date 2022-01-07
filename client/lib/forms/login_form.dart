@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:bor/main.dart';
+import 'package:bor/auth/tokens.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
@@ -28,7 +29,7 @@ class _LoginFormState extends State<LoginForm> {
           'password': passInput,
         })
     ).then((value) {
-      token = json.decode(value.body)['token'];
+      setToken(storage,json.decode(value.body)['token']);
       //Redirect to home page
     });
   }
