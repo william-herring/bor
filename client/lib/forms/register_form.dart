@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:bor/auth/tokens.dart';
 import 'package:bor/forms/validators.dart';
 import 'package:bor/main.dart';
 import 'package:flutter/material.dart';
@@ -42,7 +43,7 @@ class _RegisterFormState extends State<RegisterForm> {
         'password': passInput,
       })
     ).then((value) {
-      token = json.decode(value.body)['token'];
+      setToken(storage, json.decode(value.body)['token']);
       //Redirect to home page
     });
   }

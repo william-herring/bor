@@ -4,10 +4,11 @@ import 'package:bor/screens/teams.dart';
 import 'package:bor/screens/login.dart';
 import 'package:bor/views/login-register-view.dart';
 import 'package:flutter/material.dart';
+import 'package:bor/auth/tokens.dart';
 
-var token;
 const serverPort = "http://127.0.0.1:8000";
 const dev = true; // REMOVE IN PRODUCTION
+
 
 void main() {
   runApp(const App());
@@ -19,7 +20,8 @@ class App extends StatelessWidget {
   @override
   Widget build(context) {
     return MaterialApp(
-      initialRoute:  token == null? '/login' : '/teams',
+
+      initialRoute:  getToken(storage) == null ? '/login' : '/teams',
       onGenerateRoute: (settings) {
         String route = settings.name as String;
 
