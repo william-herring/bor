@@ -1,5 +1,7 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
+const storage = FlutterSecureStorage();
+
 Future<String?>? getToken(FlutterSecureStorage storage){
   Future<String?> newToken = storage.read(key: "token");
   if (newToken.toString().isNotEmpty){

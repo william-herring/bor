@@ -4,12 +4,10 @@ import 'package:bor/screens/teams.dart';
 import 'package:bor/screens/login.dart';
 import 'package:flutter/material.dart';
 import 'package:bor/auth/tokens.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-
 
 const serverPort = "http://127.0.0.1:8000";
 const dev = true; // REMOVE IN PRODUCTION
-const storage = FlutterSecureStorage();
+
 
 void main() {
   runApp(const App());
