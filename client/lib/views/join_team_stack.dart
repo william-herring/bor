@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:animations/animations.dart';
+import 'package:bor/auth/tokens.dart';
 import 'package:bor/main.dart';
 import 'package:bor/objects/team_obj.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +11,7 @@ import 'package:http/http.dart' as http;
 Future<Team> fetchTeam(code) async {
   final response = await http.get(
       Uri.parse(serverPort + "/api/get-team?code=$code"),
-      headers: { 'Content-Type': 'application/json' }
+      headers: { 'Content-Type': 'application/json', 'Authorization': token.toString() }
   );
 
   if (response.statusCode == 200) {

@@ -28,8 +28,9 @@ class _LoginFormState extends State<LoginForm> {
           'username': userInput,
           'password': passInput,
         })
-    ).then((value) {
-      setToken(storage,json.decode(value.body)['token']);
+    ).then((value) async {
+      token = await getToken();
+      setToken(storage, json.decode(value.body)['token']);
       //Redirect to home page
     });
   }

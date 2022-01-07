@@ -45,9 +45,12 @@ class CreateTeamView(APIView):
 
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
-            leader = serializer.data.get('leader')
+            usr_email = str(request.user.email)
+            leader = usr_email
             title = serializer.data.get('title')
-            team = Team(leader=leader, title=title)
+            print(usr_email)
+            members = f'{leader}, '
+            team = Team(leader=leader, title=title, members=members)
             team.save()
             self.request.session['team_code'] = team.code
             return Response(TeamSerializer(team).data, status=HTTP_201_CREATED)
@@ -119,7 +122,9 @@ class JoinTeamView(APIView):
             if len(team_result) > 0:
                 team = team_result[0]
                 self.request.session['team_code'] = code
-                # TODO: Add user email to "members" field
+                usr_email = str(request.user.email)
+                print(usr_email)
+                team.members += f'{usr_email}, '
                 return Response({'Joined team': f'{code}'}, status=HTTP_200_OK)
             return Response({'Not Found': 'Team does not exist'}, status=HTTP_404_NOT_FOUND)
 

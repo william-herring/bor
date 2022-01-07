@@ -31,7 +31,7 @@ class TeamSerializer(ModelSerializer):
 class CreateTeamSerializer(ModelSerializer):
     class Meta:
         model = Team
-        fields = ('leader', 'title')
+        fields = 'title'
 
 
 class UpdateTeamSerializer(ModelSerializer):
