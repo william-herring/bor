@@ -1,3 +1,9 @@
+/*
+validators.dart contains commonly used form validators. Typically, validators operate using
+regular expressions to match the input value and return a response.
+All validators MUST have a return type of String?.
+ */
+
 String? validateEmail(String? value) {
   String pattern =
       r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]"
