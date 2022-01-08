@@ -9,9 +9,10 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 
 Future<Team> fetchTeam(code) async {
+  token = await getToken();
   final response = await http.get(
       Uri.parse(serverPort + "/api/get-team?code=$code"),
-      headers: { 'Content-Type': 'application/json', 'Authorization': token.toString() }
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Token ${token.toString()}' }
   );
 
   if (response.statusCode == 200) {

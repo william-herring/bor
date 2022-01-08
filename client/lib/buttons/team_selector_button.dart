@@ -17,10 +17,20 @@ class _TeamSelectorButtonState extends State<TeamSelectorButton> {
   @override
   Widget build(BuildContext context) {
     return DropdownButton<String>(
-        value: teamValue,
-        onChanged: (value) {},
+      value: teamValue,
+
+        onChanged: (String? value) {
+          setState(() {
+            teamValue = value!;
+          });
+        },
         icon: const Icon(Icons.arrow_drop_down_sharp),
-        items: <String>[teamValue, 'Test1', 'Test2', 'Test3']
+        items: <String>[
+          'No team selected', //Need to find a way to change this to the teamValue
+          'Test1',
+          'Test2',
+          'Test3'
+        ]
             .map<DropdownMenuItem<String>>((String value) {
           return DropdownMenuItem<String>(
             value: value,

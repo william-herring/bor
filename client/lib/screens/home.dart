@@ -26,7 +26,17 @@ class HomeScreen extends StatelessWidget {
                       fontSize: 46
                   ),
                 ),
-                TeamSelectorButton()
+                TeamSelectorButton(),
+                ListTile(
+                  trailing: const Icon(Icons.home_filled, color: Colors.deepPurpleAccent, size: 36.0),
+                  title: Text("Home", style: GoogleFonts.ubuntu(fontWeight: FontWeight.w500, color: Colors.deepPurpleAccent)),
+                  onTap: () {},
+                ),
+                ListTile(
+                  trailing: const Icon(Icons.home_filled, color: Colors.deepPurpleAccent, size: 36.0),
+                  title: Text("Home", style: GoogleFonts.ubuntu(fontWeight: FontWeight.w500, color: Colors.deepPurpleAccent)),
+                  onTap: () {},
+                )
               ]
             ),
           ),
