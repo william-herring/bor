@@ -29,6 +29,20 @@ class HomeScreen extends StatelessWidget {
   HomeScreen({Key? key}) : super(key: key);
   Future<String> username = fetchUsername();
 
+  void _showUserMenu(context) async {
+    await showMenu(
+      context: context,
+      position: const RelativeRect.fromLTRB(double.infinity, double.negativeInfinity, 100, 100),
+      items: [
+        PopupMenuItem<String>(
+            child: Text('Settings', style: GoogleFonts.ubuntu()), value: 'Details'),
+        PopupMenuItem<String>(
+            child: Text('Log out', style: GoogleFonts.ubuntu()), value: 'Log out'),
+      ],
+      elevation: 8.0,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,14 +55,20 @@ class HomeScreen extends StatelessWidget {
                 future: username,
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
-                    return Row(
-                      children: [
-                        const Icon(Icons.account_circle_sharp, size: 30.0,),
-                        Padding(
-                            padding: const EdgeInsets.only(right: 16.0, left: 8.0),
-                            child: Text(snapshot.data!.toString(), style: GoogleFonts.ubuntu(fontSize: 16))
-                        ),
-                      ],
+                    return InkWell(
+                      hoverColor: Colors.white.withOpacity(0),
+                      onTap: () {
+                        _showUserMenu(context);
+                      },
+                      child: Row(
+                        children: [
+                          const Icon(Icons.account_circle_sharp, size: 30.0,),
+                          Padding(
+                              padding: const EdgeInsets.only(right: 16.0, left: 8.0),
+                              child: Text(snapshot.data!.toString(), style: GoogleFonts.ubuntu(fontSize: 16))
+                          ),
+                        ],
+                      ),
                     );
                   }
                   return const CircularProgressIndicator(color: Colors.deepPurpleAccent);
