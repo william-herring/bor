@@ -29,9 +29,10 @@ class _LoginFormState extends State<LoginForm> {
           'password': passInput,
         })
     ).then((value) async {
-      token = await getToken();
       setToken(storage, json.decode(value.body)['token']);
+      token = await getToken();
       //Redirect to home page
+      Navigator.pushReplacementNamed(context, '/');
     });
   }
 

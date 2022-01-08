@@ -1,5 +1,5 @@
 import 'package:bor/screens/join_team.dart';
-import 'package:bor/screens/teams.dart';
+import 'package:bor/screens/home.dart';
 import 'package:bor/views/login-register-view.dart';
 import 'package:flutter/material.dart';
 import 'package:bor/auth/tokens.dart';
@@ -19,7 +19,7 @@ class App extends StatelessWidget {
   @override
   Widget build(context) {
     return MaterialApp(
-      initialRoute: token == null? '/login' : '/teams',
+      initialRoute: token == null? '/login' : '/',
       onGenerateRoute: (settings) {
         String route = settings.name as String;
 
@@ -44,7 +44,7 @@ class App extends StatelessWidget {
       title: 'Bor',
       debugShowCheckedModeBanner: false,
       routes: {
-        '/teams': (context) => const TeamScreen(),
+        '/': (context) => const HomeScreen(),
         '/join': (context) => const JoinTeamScreen(),
         '/login': (context) => LoginRegisterView(viewIndex: 0),
         '/register': (context) => LoginRegisterView(viewIndex: 1),
