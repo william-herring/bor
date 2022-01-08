@@ -54,6 +54,13 @@ flutter pub get
 <a name="dgserver"></a>
 ### Run the dev server
 
+Before we begin, you will have to install the required packages.
+
+(bor/server)
+```bash
+pip3 install -r REQUIREMENTS.txt
+```
+
 Remember to always migrate changes to the database before starting the server.
 
 (bor/server)
