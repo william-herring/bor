@@ -25,6 +25,19 @@ class CreateUserView(CreateAPIView):
     ]
 
 
+class GetUsernameView(APIView):
+    permission_classes = [
+        permissions.IsAuthenticated
+    ]
+
+    def get(self, request, format=None):
+        try:
+            username = request.user.username
+            return Response({'Username': username}, status=HTTP_200_OK)
+        except:
+            return Response({'Bad Request': 'Failed to retrieve user data'}, status=HTTP_400_BAD_REQUEST)
+
+
 class TeamView(ListAPIView):
     queryset = Team.objects.all()
     serializer_class = TeamSerializer

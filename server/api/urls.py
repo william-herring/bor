@@ -9,5 +9,6 @@ urlpatterns = [
     path('delete-team', DeleteTeamView.as_view()),
     path('update-team', UpdateTeamView.as_view()),
     path('user', UserView.as_view()),
-    path('create-user', CreateUserView.as_view())
+    path('create-user', CreateUserView.as_view()),
+    path('get-username', GetUsernameView.as_view())
 ]
