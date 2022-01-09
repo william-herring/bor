@@ -1,26 +1,8 @@
-import 'dart:convert';
-import 'package:animations/animations.dart';
-import 'package:bor/auth/tokens.dart';
-import 'package:bor/main.dart';
 import 'package:bor/objects/team_obj.dart';
+import 'package:bor/utils/common_requests.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:http/http.dart' as http;
-
-Future<Team> fetchTeam(code) async {
-  token = await getToken();
-  final response = await http.get(
-      Uri.parse(serverPort + "/api/get-team?code=$code"),
-      headers: { 'Content-Type': 'application/json', 'Authorization': 'Token ${token.toString()}' }
-  );
-
-  if (response.statusCode == 200) {
-    return Team.fromJson(jsonDecode(response.body));
-  }
-
-  throw Exception('Failed to load team data');
-}
 
 class JoinTeamStack extends StatefulWidget {
   final String code;
@@ -187,7 +169,9 @@ class _JoinTeamStackState extends State<JoinTeamStack> {
                             ),
                           ),
                           ElevatedButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                joinTeam(snapshot.data!.code);
+                              },
                               child: Padding(
                                 padding: const EdgeInsets.all(12.0),
                                 child: Text(

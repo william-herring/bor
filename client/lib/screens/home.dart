@@ -1,28 +1,8 @@
-import 'dart:convert';
-
-import 'package:bor/auth/tokens.dart';
 import 'package:bor/buttons/team_selector_button.dart';
+import 'package:bor/utils/common_requests.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:http/http.dart' as http;
 import 'dart:async';
-import '../main.dart';
-
-Future<String> fetchUsername() async {
-  token = await getToken();
-  final response = await http.get(
-    Uri.parse(serverPort + "/api/get-username"),
-    headers: { 'Content-Type': 'application/json', 'Authorization': 'Token ${token.toString()}' }
-  );
-
-  if (response.statusCode == 200) {
-    String username = jsonDecode(response.body)['Username'];
-
-    return username;
-  }
-
-  throw Exception('Failed to fetch username');
-}
 
 
 class HomeScreen extends StatelessWidget {
