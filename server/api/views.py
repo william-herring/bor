@@ -46,6 +46,18 @@ class TeamView(ListAPIView):
     ]
 
 
+class GetUserTeams(ListAPIView):
+    serializer_class = TeamSerializer
+    permission_classes = [
+        permissions.IsAuthenticated
+    ]
+
+    def get_queryset(self):
+        teams = Team.objects.filter(members__icontains=self.request.user.email)
+
+        return teams
+
+
 class CreateTeamView(APIView):
     serializer_class = CreateTeamSerializer
     permission_classes = [

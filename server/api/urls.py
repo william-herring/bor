@@ -10,5 +10,6 @@ urlpatterns = [
     path('update-team', UpdateTeamView.as_view()),
     path('user', UserView.as_view()),
     path('create-user', CreateUserView.as_view()),
-    path('get-username', GetUsernameView.as_view())
+    path('get-username', GetUsernameView.as_view()),
+    path('get-user-teams', GetUserTeams.as_view())
 ]

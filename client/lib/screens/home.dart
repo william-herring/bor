@@ -127,7 +127,54 @@ class HomeScreen extends StatelessWidget {
               ]
             ),
           ),
-        )
+        ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+                "You're not part of any teams. To begin, join or create a team.",
+              style: GoogleFonts.ubuntu(fontSize: 25, fontWeight: FontWeight.bold),
+              textAlign: TextAlign.center,
+            ),
+            Container(
+              margin: const EdgeInsets.all(16.0),
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, '/join');
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Text(
+                    "Join",
+                    style: GoogleFonts.ubuntu(
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.deepPurpleAccent,
+                ),
+              ),
+            ),
+            ElevatedButton(
+              onPressed: () {},
+              child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Text(
+                  "Create",
+                  style: GoogleFonts.ubuntu(
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+              style: ElevatedButton.styleFrom(
+                primary: Colors.deepPurpleAccent,
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
