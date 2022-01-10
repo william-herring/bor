@@ -199,6 +199,20 @@ class _JoinTeamStackState extends State<JoinTeamStack> {
                               primary: Colors.deepPurpleAccent,
                             ),
                           ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(15.0),
+                                child: IconButton(onPressed: () => setState(() {
+                                  isTeamInitialized = false;
+                                  codeInput = "";
+                                  stackIndex -= 1;
+                                }),
+                                    icon: const Icon(Icons.arrow_back)),
+                              ),
+                            ],
+                          )
                         ],
                       ),
                     ],
