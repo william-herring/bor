@@ -146,10 +146,13 @@ class JoinTeamView(APIView):
             team_result = Team.objects.filter(code=code)
             if len(team_result) > 0:
                 team = team_result[0]
+                if request.user.email in team.members:
+                    return Response({'Bad Request': 'User already in team'}, status=HTTP_400_BAD_REQUEST)
+
                 self.request.session['team_code'] = code
                 usr_email = str(request.user.email)
-                print(usr_email)
                 team.members += f'{usr_email}, '
+                team.save(update_fields=['members'])
                 return Response({'Joined team': f'{code}'}, status=HTTP_200_OK)
             return Response({'Not Found': 'Team does not exist'}, status=HTTP_404_NOT_FOUND)
 

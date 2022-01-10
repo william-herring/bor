@@ -1,8 +1,11 @@
+import 'dart:convert';
+
 import 'package:bor/objects/team_obj.dart';
 import 'package:bor/utils/common_requests.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:bor/alerts/error_alert.dart';
 
 class JoinTeamStack extends StatefulWidget {
   final String code;
@@ -169,8 +172,19 @@ class _JoinTeamStackState extends State<JoinTeamStack> {
                             ),
                           ),
                           ElevatedButton(
-                              onPressed: () {
-                                joinTeam(snapshot.data!.code);
+                              onPressed: () async {
+                                final response = await joinTeam(snapshot.data!.code);
+                                if (response.statusCode != 200) {
+                                  await showErrorDialog(
+                                    context,
+                                    jsonEncode(
+                                      {
+                                        "Response": response.body.toString(),
+                                        "Status": response.statusCode,
+                                      }
+                                    )
+                                  );
+                                }
                               },
                               child: Padding(
                                 padding: const EdgeInsets.all(12.0),

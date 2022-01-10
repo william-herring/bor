@@ -23,7 +23,7 @@ Future<Team> fetchTeam(String code) async {
   throw Exception('Failed to load team data');
 }
 
-void joinTeam(String code) async {
+Future<http.Response> joinTeam(String code) async {
   token = await getToken();
   final response = await http.post(
       Uri.parse(serverPort + "/api/join-team"),
@@ -33,13 +33,7 @@ void joinTeam(String code) async {
       headers: { 'Content-Type': 'application/json', 'Authorization': 'Token ${token.toString()}' }
   );
 
-  print(response.body);
-
-  if (response.statusCode != 200) {
-    throw Exception('Failed to join team');
-  }
-
-  print("Success!");
+  return response;
 }
 
 Future<String> fetchUsername() async {
