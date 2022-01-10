@@ -9,7 +9,7 @@ common_requests.dart is a collection of commonly used http requests. Having it i
 one place makes it easier to access and reuse.
  */
 
-Future<Team> fetchTeam(code) async {
+Future<Team> fetchTeam(String code) async {
   token = await getToken();
   final response = await http.get(
       Uri.parse(serverPort + "/api/get-team?code=$code"),
@@ -26,9 +26,14 @@ Future<Team> fetchTeam(code) async {
 void joinTeam(String code) async {
   token = await getToken();
   final response = await http.post(
-      Uri.parse(serverPort + "/api/join-team?code=$code"),
+      Uri.parse(serverPort + "/api/join-team"),
+      body: jsonEncode({
+        "code": code
+      }),
       headers: { 'Content-Type': 'application/json', 'Authorization': 'Token ${token.toString()}' }
   );
+
+  print(response.body);
 
   if (response.statusCode != 200) {
     throw Exception('Failed to join team');
