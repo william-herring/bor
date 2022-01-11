@@ -118,6 +118,7 @@ class _JoinTeamStackState extends State<JoinTeamStack> {
                     ],
                     textAlign: TextAlign.center,
                     decoration: InputDecoration(
+                      focusColor: Colors.deepPurpleAccent,
                       labelText: "Eg. AX3D70",
                       labelStyle: GoogleFonts.ubuntu(),
                       focusedBorder: const UnderlineInputBorder(
@@ -184,6 +185,8 @@ class _JoinTeamStackState extends State<JoinTeamStack> {
                                       }
                                     )
                                   );
+                                } else {
+                                  Navigator.pushNamed(context, '/');
                                 }
                               },
                               child: Padding(

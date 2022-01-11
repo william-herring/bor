@@ -1,3 +1,4 @@
+import 'package:bor/screens/create_team.dart';
 import 'package:bor/screens/join_team.dart';
 import 'package:bor/screens/home.dart';
 import 'package:bor/views/login_register_view.dart';
@@ -46,6 +47,7 @@ class App extends StatelessWidget {
       routes: {
         '/': (context) => HomeScreen(),
         '/join': (context) => const JoinTeamScreen(),
+        '/create': (context) => const CreateTeamScreen(),
         '/login': (context) => LoginRegisterView(viewIndex: 0),
         '/register': (context) => LoginRegisterView(viewIndex: 1),
       },

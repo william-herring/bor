@@ -75,32 +75,32 @@ class HomeScreen extends StatelessWidget {
                 ),
                 TeamSelectorButton(),
                 ListTile(
-                  trailing: const Icon(Icons.home_filled, color: Colors.deepPurpleAccent, size: 36.0),
+                  trailing: const Icon(Icons.home_filled, color: Colors.deepPurpleAccent, size: 26.0),
                   title: Text("Home", style: GoogleFonts.ubuntu(fontWeight: FontWeight.w500, color: Colors.deepPurpleAccent)),
                   onTap: () {},
                 ),
                 ListTile(
-                  trailing: const Icon(Icons.library_books_sharp, size: 36.0),
+                  trailing: const Icon(Icons.library_books_sharp, size: 26.0),
                   title: Text("Projects", style: GoogleFonts.ubuntu(fontWeight: FontWeight.w500)),
                   onTap: () {},
                 ),
                 ListTile(
-                  trailing: const Icon(Icons.dashboard, size: 36.0),
+                  trailing: const Icon(Icons.dashboard, size: 26.0),
                   title: Text("Team board", style: GoogleFonts.ubuntu(fontWeight: FontWeight.w500)),
                   onTap: () {},
                 ),
                 ListTile(
-                  trailing: const Icon(Icons.task_sharp, size: 36.0),
+                  trailing: const Icon(Icons.task_sharp, size: 26.0),
                   title: Text("Tasks", style: GoogleFonts.ubuntu(fontWeight: FontWeight.w500)),
                   onTap: () {},
                 ),
                 ListTile(
-                  trailing: const Icon(Icons.show_chart, size: 36.0),
+                  trailing: const Icon(Icons.show_chart, size: 26.0),
                   title: Text("Statistics", style: GoogleFonts.ubuntu(fontWeight: FontWeight.w500)),
                   onTap: () {},
                 ),
                 ListTile(
-                  trailing: const Icon(Icons.people_sharp, size: 36.0),
+                  trailing: const Icon(Icons.people_sharp, size: 26.0),
                   title: Text("Members", style: GoogleFonts.ubuntu(fontWeight: FontWeight.w500)),
                   onTap: () {},
                 )
@@ -138,7 +138,9 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamed(context, '/create');
+              },
               child: Padding(
                 padding: const EdgeInsets.all(12.0),
                 child: Text(

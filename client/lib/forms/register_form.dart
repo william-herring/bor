@@ -88,6 +88,7 @@ class _RegisterFormState extends State<RegisterForm> {
               },
               textAlign: TextAlign.center,
               decoration: InputDecoration(
+                focusColor: Colors.deepPurpleAccent,
                 labelText: "Email",
                 labelStyle: GoogleFonts.ubuntu(),
                 focusedBorder: const UnderlineInputBorder(
@@ -118,6 +119,7 @@ class _RegisterFormState extends State<RegisterForm> {
               },
               textAlign: TextAlign.center,
               decoration: InputDecoration(
+                focusColor: Colors.deepPurpleAccent,
                 labelText: "Username",
                 labelStyle: GoogleFonts.ubuntu(),
                 focusedBorder: const UnderlineInputBorder(
@@ -157,6 +159,7 @@ class _RegisterFormState extends State<RegisterForm> {
 
                       textAlign: TextAlign.center,
                       decoration: InputDecoration(
+                        focusColor: Colors.deepPurpleAccent,
                         labelText: "Password",
                         labelStyle: GoogleFonts.ubuntu(),
                         focusedBorder: const UnderlineInputBorder(
@@ -194,6 +197,7 @@ class _RegisterFormState extends State<RegisterForm> {
 
                       textAlign: TextAlign.center,
                       decoration: InputDecoration(
+                        focusColor: Colors.deepPurpleAccent,
                         labelText: "Password (again)",
                         labelStyle: GoogleFonts.ubuntu(),
                         focusedBorder: const UnderlineInputBorder(
