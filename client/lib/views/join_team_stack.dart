@@ -69,6 +69,7 @@ class _JoinTeamStackState extends State<JoinTeamStack> {
                     )
                   ),
                   TextFormField(
+                    style: GoogleFonts.ubuntu(),
                     onFieldSubmitted: (value){
                       _formKey.currentState!.validate();
                     },

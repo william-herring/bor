@@ -58,6 +58,7 @@ class _LoginFormState extends State<LoginForm> {
 
             TextFormField(
               enableSuggestions: false,
+              style: GoogleFonts.ubuntu(),
               autocorrect: false,
               onFieldSubmitted: (value ) {passwordField.requestFocus();},
               validator: (value) {
@@ -88,6 +89,7 @@ class _LoginFormState extends State<LoginForm> {
 
             TextFormField(
               focusNode: passwordField,
+              style: GoogleFonts.ubuntu(),
               enableSuggestions: false,
               autocorrect: false,
               obscureText: true,

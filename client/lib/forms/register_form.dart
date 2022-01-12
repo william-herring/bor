@@ -70,6 +70,7 @@ class _RegisterFormState extends State<RegisterForm> {
             TextFormField(
               enableSuggestions: false,
               autocorrect: false,
+              style: GoogleFonts.ubuntu(),
               onFieldSubmitted: (value){userNode.requestFocus();},
               validator: (value) {
                 if (value == null || value.isEmpty) {
@@ -105,6 +106,7 @@ class _RegisterFormState extends State<RegisterForm> {
               focusNode: userNode,
               onFieldSubmitted: (value){pass1Node.requestFocus();},
               enableSuggestions: false,
+              style: GoogleFonts.ubuntu(),
               autocorrect: false,
               validator: (value) {
                 if (value == null || value.isEmpty) {
@@ -139,6 +141,7 @@ class _RegisterFormState extends State<RegisterForm> {
                     margin: const EdgeInsets.only(right: 6),
                     child: TextFormField(
                       focusNode: pass1Node,
+                      style: GoogleFonts.ubuntu(),
                       onFieldSubmitted: (value){pass2Node.requestFocus();},
                       enableSuggestions: false,
                       autocorrect: false,
@@ -177,6 +180,7 @@ class _RegisterFormState extends State<RegisterForm> {
                     margin: const EdgeInsets.only(left: 6),
                     child: TextFormField(
                       focusNode: pass2Node,
+                      style: GoogleFonts.ubuntu(),
                       onFieldSubmitted: (value) => handleSubmit(),
                       enableSuggestions: false,
                       autocorrect: false,

@@ -12,6 +12,7 @@ class _CreateTeamFormState extends State<CreateTeamForm> {
   final GlobalKey _formKey = GlobalKey<FormState>();
   bool receiveNotifications = false;
   bool createRanks = false;
+  bool _expanded = false;
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +37,7 @@ class _CreateTeamFormState extends State<CreateTeamForm> {
                 enableSuggestions: false,
                 autocorrect: false,
                 textAlign: TextAlign.center,
+                style: GoogleFonts.ubuntu(),
                 decoration: InputDecoration(
                   focusColor: Colors.deepPurpleAccent,
                   labelText: "Title",
@@ -70,6 +72,36 @@ class _CreateTeamFormState extends State<CreateTeamForm> {
               },
               activeColor: Colors.deepPurpleAccent,
               title: Text("Create team ranks", style: GoogleFonts.ubuntu()),
+            ),
+
+            Container(
+              margin: const EdgeInsets.only(top: 26.0),
+              child: ExpansionTile(
+                textColor: Colors.deepPurpleAccent,
+                iconColor: Colors.deepPurpleAccent,
+                trailing: const Icon(Icons.person_add),
+                title: Text(
+                  "Invite users", style: GoogleFonts.ubuntu()
+                ),
+                children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      //May change to TextFormField
+                      child: TextField(
+                        decoration: InputDecoration(
+                          icon: const Icon(Icons.search),
+                          focusColor: Colors.deepPurpleAccent,
+                          iconColor: Colors.deepPurpleAccent,
+                          focusedBorder: const OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.deepPurpleAccent)
+                          ),
+                          prefixStyle: GoogleFonts.ubuntu(color: Colors.deepPurpleAccent),
+                          hintText: "Search users"
+                        ),
+                      ),
+                    )
+                ],
+              ),
             )
           ],
         ),
