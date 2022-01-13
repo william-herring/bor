@@ -9,6 +9,8 @@ from django.contrib.auth.models import User
 from .serializers import *
 
 
+# UserView should not be used for administration. It has search functionality, and is used by the client.
+# Please manage users at [port]/admin.
 class UserView(ListAPIView):
     permission_classes = [
         permissions.IsAuthenticated
@@ -16,7 +18,7 @@ class UserView(ListAPIView):
 
     queryset = User.objects.all()
     filter_backends = [filters.SearchFilter]
-    search_fields = ['username', 'email']
+    search_fields = ['username']
     serializer_class = UserSerializer
 
 
@@ -28,6 +30,7 @@ class CreateUserView(CreateAPIView):
     ]
 
 
+# Returns the username of any request with provided authentication token
 class GetUsernameView(APIView):
     permission_classes = [
         permissions.IsAuthenticated
@@ -41,6 +44,7 @@ class GetUsernameView(APIView):
             return Response({'Bad Request': 'Failed to retrieve user data'}, status=HTTP_400_BAD_REQUEST)
 
 
+# Can be used for administration. Returns a list of all teams in database
 class TeamView(ListAPIView):
     queryset = Team.objects.all()
     serializer_class = TeamSerializer
@@ -49,6 +53,7 @@ class TeamView(ListAPIView):
     ]
 
 
+# Returns a list of all teams that the user is currently part of
 class GetUserTeams(ListAPIView):
     serializer_class = TeamSerializer
     permission_classes = [
@@ -61,6 +66,8 @@ class GetUserTeams(ListAPIView):
         return teams
 
 
+# This view creates a new Team object, given the correct CreateTeamSerializer.
+# The team code is then stored in the session for quick access in future.
 class CreateTeamView(APIView):
     serializer_class = CreateTeamSerializer
     permission_classes = [

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:bor/auth/tokens.dart';
 import 'package:bor/objects/team_obj.dart';
+import 'package:bor/objects/user_obj.dart';
 import 'package:http/http.dart' as http;
 import '../main.dart';
 
@@ -48,14 +49,25 @@ Future<http.Response> joinTeam(String code) async {
 Request: GET
 Description: Returns an HTTP response (temp) from the server, after requesting a list of users matching the username.
  */
-Future<http.Response> searchUsers(String username) async {
+Future<List<User>> searchUsers(String searchArg) async {
+  if (searchArg.isEmpty) {
+    return [];
+  }
+
   token = await getToken();
   final response = await http.get(
-    Uri.parse(serverPort + "/api/query-users?username=$username"),
+    Uri.parse(serverPort + "/api/user?search=$searchArg"),
     headers: { 'Content-Type': 'application/json', 'Authorization': 'Token ${token.toString()}' }
   );
 
-  return response;
+  final body = jsonDecode(response.body);
+  List<User> users = [];
+
+  for (var i in body) {
+    users.add(User.fromJson(i));
+  }
+
+  return users;
 }
 
 Future<String> fetchUsername() async {

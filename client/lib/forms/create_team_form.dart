@@ -1,3 +1,4 @@
+import 'package:bor/objects/user_obj.dart';
 import 'package:bor/utils/common_requests.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -15,13 +16,37 @@ class _CreateTeamFormState extends State<CreateTeamForm> {
   String title = "";
   bool receiveNotifications = false;
   bool emailCode = true;
-  Future<http.Response> searchResult = searchUsers("");
+  late Future<List<User>> searchResult;
+
+  @override
+  void initState() {
+    searchResult = searchUsers("--");
+  }
+
+  List<Widget> buildUserTiles(List<User> users) {
+    List<Widget> tiles = [];
+
+    for (var i in users) {
+      final username = i.username;
+      final email = i.email; //May be used in future
+
+      tiles.add(
+        ListTile(
+          onTap: () {},
+          iconColor: Colors.deepPurpleAccent,
+          leading: const Icon(Icons.account_circle_sharp, size: 30.0),
+          trailing: Text(username, style: GoogleFonts.ubuntu()),
+        )
+      );
+    }
+
+    return tiles;
+  }
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: 400,
-      height: 400,
 
       child: Form(
         key: _formKey,
@@ -106,6 +131,11 @@ class _CreateTeamFormState extends State<CreateTeamForm> {
                       padding: const EdgeInsets.all(16.0),
                       //May change to TextFormField
                       child: TextField(
+                        onChanged: (value) {
+                          setState(() {
+                            searchResult = searchUsers(value);
+                          });
+                        },
                         decoration: InputDecoration(
                           icon: const Icon(Icons.search, color: Colors.grey),
                           focusColor: Colors.deepPurpleAccent,
@@ -118,11 +148,15 @@ class _CreateTeamFormState extends State<CreateTeamForm> {
                         ),
                       ),
                     ),
-                  FutureBuilder<http.Response> (
+                  FutureBuilder<List<User>> (
                     future: searchResult,
                     builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        return Text(snapshot.data!.body);
+                      if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+                        return ListView(
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+                          children: buildUserTiles(snapshot.data!),
+                        );
                       }
 
                       return Text("No results found");
