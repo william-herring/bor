@@ -11,5 +11,6 @@ urlpatterns = [
     path('user', UserView.as_view()),
     path('create-user', CreateUserView.as_view()),
     path('get-username', GetUsernameView.as_view()),
-    path('get-user-teams', GetUserTeams.as_view())
+    path('get-user-teams', GetUserTeams.as_view()),
+    path('query-users', QueryUsersView.as_view())
 ]

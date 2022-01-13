@@ -4,11 +4,14 @@ import 'package:bor/objects/team_obj.dart';
 import 'package:http/http.dart' as http;
 import '../main.dart';
 
-/*
-common_requests.dart is a collection of commonly used http requests. Having it in
-one place makes it easier to access and reuse.
- */
 
+//common_requests.dart is a collection of commonly used http requests. Having it in one place makes it easier to access and reuse.
+
+
+/*
+Request: GET
+Description: Returns a Team object, containing all data for the team with matching code.
+ */
 Future<Team> fetchTeam(String code) async {
   token = await getToken();
   final response = await http.get(
@@ -23,6 +26,11 @@ Future<Team> fetchTeam(String code) async {
   throw Exception('Failed to load team data');
 }
 
+/*
+Request: POST
+Description: Returns an HTTP response from the server, after requesting to join team with matching
+code.
+ */
 Future<http.Response> joinTeam(String code) async {
   token = await getToken();
   final response = await http.post(
@@ -31,6 +39,20 @@ Future<http.Response> joinTeam(String code) async {
         "code": code
       }),
       headers: { 'Content-Type': 'application/json', 'Authorization': 'Token ${token.toString()}' }
+  );
+
+  return response;
+}
+
+/*
+Request: GET
+Description: Returns an HTTP response (temp) from the server, after requesting a list of users matching the username.
+ */
+Future<http.Response> searchUsers(String username) async {
+  token = await getToken();
+  final response = await http.get(
+    Uri.parse(serverPort + "/api/query-users?username=$username"),
+    headers: { 'Content-Type': 'application/json', 'Authorization': 'Token ${token.toString()}' }
   );
 
   return response;

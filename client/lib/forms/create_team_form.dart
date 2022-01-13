@@ -1,5 +1,7 @@
+import 'package:bor/utils/common_requests.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart' as http;
 
 class CreateTeamForm extends StatefulWidget {
   const CreateTeamForm({Key? key}) : super(key: key);
@@ -9,10 +11,11 @@ class CreateTeamForm extends StatefulWidget {
 }
 
 class _CreateTeamFormState extends State<CreateTeamForm> {
-  final GlobalKey _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  String title = "";
   bool receiveNotifications = false;
-  bool createRanks = false;
-  bool _expanded = false;
+  bool emailCode = true;
+  Future<http.Response> searchResult = searchUsers("");
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +37,20 @@ class _CreateTeamFormState extends State<CreateTeamForm> {
               ),
 
               TextFormField(
+                validator: (value) {
+                  if (value == null) {
+                    return "Required field";
+                  }
+
+                  if (value.isEmpty) {
+                    return "Required field";
+                  }
+
+                  setState(() {
+                    title = value;
+                  });
+                },
+
                 enableSuggestions: false,
                 autocorrect: false,
                 textAlign: TextAlign.center,
@@ -51,6 +68,17 @@ class _CreateTeamFormState extends State<CreateTeamForm> {
                 ),
 
               ),
+
+            CheckboxListTile(
+              value: emailCode,
+              onChanged: (bool? newValue) {
+                setState(() {
+                  emailCode = !emailCode;
+                });
+              },
+              activeColor: Colors.deepPurpleAccent,
+              title: Text("Email me the invite code", style: GoogleFonts.ubuntu()),
+            ),
             
             CheckboxListTile(
                 value: receiveNotifications,
@@ -63,16 +91,6 @@ class _CreateTeamFormState extends State<CreateTeamForm> {
                 title: Text("Receive notifications", style: GoogleFonts.ubuntu()),
             ),
 
-            CheckboxListTile(
-              value: createRanks,
-              onChanged: (bool? newValue) {
-                setState(() {
-                  createRanks = !createRanks;
-                });
-              },
-              activeColor: Colors.deepPurpleAccent,
-              title: Text("Create team ranks", style: GoogleFonts.ubuntu()),
-            ),
 
             Container(
               margin: const EdgeInsets.only(top: 26.0),
@@ -89,7 +107,7 @@ class _CreateTeamFormState extends State<CreateTeamForm> {
                       //May change to TextFormField
                       child: TextField(
                         decoration: InputDecoration(
-                          icon: const Icon(Icons.search),
+                          icon: const Icon(Icons.search, color: Colors.grey),
                           focusColor: Colors.deepPurpleAccent,
                           iconColor: Colors.deepPurpleAccent,
                           focusedBorder: const OutlineInputBorder(
@@ -99,9 +117,42 @@ class _CreateTeamFormState extends State<CreateTeamForm> {
                           hintText: "Search users"
                         ),
                       ),
-                    )
+                    ),
+                  FutureBuilder<http.Response> (
+                    future: searchResult,
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        return Text(snapshot.data!.body);
+                      }
+
+                      return Text("No results found");
+                    }
+                  )
                 ],
               ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Padding(
+                    padding: const EdgeInsets.only(top: 15.0),
+                    child: ElevatedButton(
+                      onPressed: () => _formKey.currentState!.validate(),
+                      child: Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: Text(
+                          "Create",
+                          style: GoogleFonts.ubuntu(
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.deepPurpleAccent,
+                      ),
+                    )
+                ),
+              ],
             )
           ],
         ),

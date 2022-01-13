@@ -60,7 +60,7 @@ class _LoginFormState extends State<LoginForm> {
               enableSuggestions: false,
               style: GoogleFonts.ubuntu(),
               autocorrect: false,
-              onFieldSubmitted: (value ) {passwordField.requestFocus();},
+              onFieldSubmitted: (value) => passwordField.requestFocus(),
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return "Required field.";
