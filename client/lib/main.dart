@@ -44,6 +44,7 @@ class App extends StatelessWidget {
 
       title: 'Bor',
       debugShowCheckedModeBanner: false,
+
       routes: {
         '/': (context) => HomeScreen(),
         '/join': (context) => const JoinTeamScreen(),

@@ -32,7 +32,9 @@ class _CreateTeamFormState extends State<CreateTeamForm> {
 
       tiles.add(
         ListTile(
-          onTap: () {},
+          onTap: () {
+            print(i.email);
+          },
           iconColor: Colors.deepPurpleAccent,
           leading: const Icon(Icons.account_circle_sharp, size: 30.0),
           trailing: Text(username, style: GoogleFonts.ubuntu()),
@@ -159,7 +161,10 @@ class _CreateTeamFormState extends State<CreateTeamForm> {
                         );
                       }
 
-                      return Text("No results found");
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text("No results found", style: GoogleFonts.ubuntu()),
+                      );
                     }
                   )
                 ],

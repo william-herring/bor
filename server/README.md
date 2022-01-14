@@ -1,7 +1,15 @@
 # Development server
 
 The dev server is a mock of the server that will eventually be used in production.
-Obviously, the database and SECRET-KEY will be different, for security reasons. 
+Obviously, the database and SECRET-KEY will be different, for security reasons.
+
+Please create the following secrets.py file before beginning:
+```python
+# Used for secret API keys, etc.
+
+SENDGRID_API = "YOUR_KEY_HERE"
+
+```
 
 
 ## About

@@ -1,10 +1,12 @@
 from rest_framework.generics import ListAPIView, CreateAPIView
 from rest_framework.views import APIView
 from rest_framework import permissions
+from .email_templates import get_invite_template
 from .models import Team
 from rest_framework.status import *
 from rest_framework.response import Response
 from rest_framework import filters
+from django.core.mail import send_mail
 from django.contrib.auth.models import User
 from .serializers import *
 
@@ -139,6 +141,27 @@ class DeleteTeamView(APIView):
             return Response({'Not Found': 'Team does not exist'}, status=HTTP_404_NOT_FOUND)
 
         return Response({'Bad Request': 'Invalid code'}, status=HTTP_400_BAD_REQUEST)
+
+
+class SendInvite(APIView):
+    permission_classes = [
+        permissions.IsAuthenticated
+    ]
+    serializer_class = InviteSerializer
+
+    def post(self, request, format=None):
+        serializer = self.serializer_class(data=request.data)
+
+        if serializer.is_valid():
+            recipient = request.data['recipient']
+            if User.objects.filter(email=recipient) > 0:
+                subject = request.data['']
+                content = get_invite_template(request.data['join_link'])
+                send_mail(subject, content, 'william.herring.au@gmail.com', recipient, fail_silently=False)
+                return Response({'Successfully sent invite'}, status=HTTP_200_OK)
+            return Response({'Bad Request': 'User does not exist'}, status=HTTP_400_BAD_REQUEST)
+
+        return Response({'Bad Request': 'Invalid Serializer'}, status=HTTP_200_OK)
 
 
 class JoinTeamView(APIView):

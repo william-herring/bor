@@ -19,3 +19,8 @@ class Team(models.Model):
     leader = models.EmailField(max_length=254)
     members = models.CharField(max_length=800)
     title = models.CharField(max_length=200)
+
+
+class Invite(models.Model):
+    recipient = models.EmailField(max_length=254)
+    join_link = models.URLField(default='localhost:3000/join')

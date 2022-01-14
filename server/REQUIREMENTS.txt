@@ -2,3 +2,4 @@ Django
 djangorestframework
 django-cors-headers
 django-filter
+sendgrid
