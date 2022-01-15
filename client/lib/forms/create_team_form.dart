@@ -17,25 +17,61 @@ class _CreateTeamFormState extends State<CreateTeamForm> {
   bool receiveNotifications = false;
   bool emailCode = true;
   late Future<List<User>> searchResult;
+  List<User> inviteUsers = [];
 
   @override
   void initState() {
-    searchResult = searchUsers("--");
+    searchResult = searchUsers("");
   }
 
   List<Widget> buildUserTiles(List<User> users) {
     List<Widget> tiles = [];
 
+    for (var i in inviteUsers) {
+      final username = i.username;
+      final email = i.email;
+
+      tiles.add(
+          ListTile(
+            onTap: () {
+              setState(() {
+                inviteUsers.remove(i);
+              });
+            },
+            tileColor: Colors.deepPurpleAccent,
+            iconColor: Colors.white,
+            textColor: Colors.white,
+            leading: const Icon(Icons.account_circle_sharp, size: 30.0),
+            trailing: Text(username, style: GoogleFonts.ubuntu(
+                fontWeight: FontWeight.bold
+            )),
+          )
+      );
+    }
+
     for (var i in users) {
       final username = i.username;
-      final email = i.email; //May be used in future
+      final email = i.email;
+      
+      List<String> invitedUsernames = [];
+      for (var i in inviteUsers) {
+        invitedUsernames.add(i.username);
+      }
+      
+      if (invitedUsernames.contains(username)) {
+        continue;
+      }
 
       tiles.add(
         ListTile(
           onTap: () {
-            print(i.email);
+            setState(() {
+              inviteUsers.add(i);
+            });
           },
+          tileColor: Colors.transparent,
           iconColor: Colors.deepPurpleAccent,
+          textColor: Colors.black,
           leading: const Icon(Icons.account_circle_sharp, size: 30.0),
           trailing: Text(username, style: GoogleFonts.ubuntu()),
         )
@@ -150,6 +186,7 @@ class _CreateTeamFormState extends State<CreateTeamForm> {
                         ),
                       ),
                     ),
+
                   FutureBuilder<List<User>> (
                     future: searchResult,
                     builder: (context, snapshot) {
@@ -161,9 +198,10 @@ class _CreateTeamFormState extends State<CreateTeamForm> {
                         );
                       }
 
-                      return Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text("No results found", style: GoogleFonts.ubuntu()),
+                      return ListView(
+                        scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
+                        children: buildUserTiles(inviteUsers),
                       );
                     }
                   )
