@@ -148,18 +148,6 @@ class _CreateTeamFormState extends State<CreateTeamForm> {
               activeColor: Colors.deepPurpleAccent,
               title: Text("Email me the invite code", style: GoogleFonts.ubuntu()),
             ),
-            
-            CheckboxListTile(
-                value: receiveNotifications,
-                onChanged: (bool? newValue) {
-                  setState(() {
-                    receiveNotifications = !receiveNotifications;
-                  });
-                },
-                activeColor: Colors.deepPurpleAccent,
-                title: Text("Receive notifications", style: GoogleFonts.ubuntu()),
-            ),
-
 
             Container(
               margin: const EdgeInsets.only(top: 26.0),

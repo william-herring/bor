@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 import random
 import string
 
@@ -24,3 +25,15 @@ class Team(models.Model):
 class Invite(models.Model):
     recipient = models.EmailField(max_length=254)
     join_link = models.URLField(default='localhost:3000/join')
+
+
+class Project(models.Model):
+    team = models.ForeignKey(Team, on_delete=models.CASCADE)
+    title = models.CharField(max_length=75)
+    open = models.BooleanField(default=True)
+
+
+class UserStatus(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    online = models.BooleanField(default=True)
+    status = models.CharField(max_length=40)
