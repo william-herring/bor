@@ -70,6 +70,27 @@ Future<List<User>> searchUsers(String searchArg) async {
   return users;
 }
 
+/*
+Request: POST
+Descriptions: Creates a new team with specified title.
+ */
+Future<http.Response> createTeam(String title) async {
+  token = await getToken();
+  final response = await http.post(
+    Uri.parse(serverPort + "/api/create-team"),
+    headers: { 'Content-Type': 'application/json', 'Authorization': 'Token ${token.toString()}' },
+    body: {
+      "title": title
+    }
+  );
+
+  return response;
+}
+
+/*
+Request: GET
+Descriptions: Returns current username for user logged in.
+ */
 Future<String> fetchUsername() async {
   token = await getToken();
   final response = await http.get(

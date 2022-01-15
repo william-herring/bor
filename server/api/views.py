@@ -157,7 +157,7 @@ class SendInvite(APIView):
             if User.objects.filter(email=recipient) > 0:
                 subject = request.data['']
                 content = get_invite_template(request.data['join_link'])
-                send_mail(subject, content, 'william.herring.au@gmail.com', recipient, fail_silently=False)
+                send_mail(subject, content, 'william.herring.au@gmail.com', [recipient], fail_silently=False)
                 return Response({'Successfully sent invite'}, status=HTTP_200_OK)
             return Response({'Bad Request': 'User does not exist'}, status=HTTP_400_BAD_REQUEST)
 

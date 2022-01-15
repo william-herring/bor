@@ -24,6 +24,11 @@ class _CreateTeamFormState extends State<CreateTeamForm> {
     searchResult = searchUsers("");
   }
 
+  void handleSubmit() {
+    _formKey.currentState!.validate();
+    createTeam(title);
+  }
+
   List<Widget> buildUserTiles(List<User> users) {
     List<Widget> tiles = [];
 
@@ -114,6 +119,7 @@ class _CreateTeamFormState extends State<CreateTeamForm> {
                   });
                 },
 
+                maxLength: 75,
                 enableSuggestions: false,
                 autocorrect: false,
                 textAlign: TextAlign.center,
@@ -214,7 +220,7 @@ class _CreateTeamFormState extends State<CreateTeamForm> {
                 Padding(
                     padding: const EdgeInsets.only(top: 15.0),
                     child: ElevatedButton(
-                      onPressed: () => _formKey.currentState!.validate(),
+                      onPressed: () => handleSubmit(),
                       child: Padding(
                         padding: const EdgeInsets.all(12.0),
                         child: Text(
