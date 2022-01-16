@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:bor/objects/user_obj.dart';
 import 'package:bor/utils/common_requests.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +28,13 @@ class _CreateTeamFormState extends State<CreateTeamForm> {
 
   void handleSubmit() {
     _formKey.currentState!.validate();
-    createTeam(title);
+    final response = createTeam(title);
+
+    response.then((value) {
+      for (var i in inviteUsers) {
+        inviteUser(jsonDecode(value.body)["code"], i.email);
+      }
+    });
   }
 
   List<Widget> buildUserTiles(List<User> users) {
@@ -57,7 +65,7 @@ class _CreateTeamFormState extends State<CreateTeamForm> {
     for (var i in users) {
       final username = i.username;
       final email = i.email;
-      
+
       List<String> invitedUsernames = [];
       for (var i in inviteUsers) {
         invitedUsernames.add(i.username);

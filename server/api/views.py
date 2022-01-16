@@ -154,8 +154,8 @@ class SendInvite(APIView):
 
         if serializer.is_valid():
             recipient = request.data['recipient']
-            if User.objects.filter(email=recipient) > 0:
-                subject = request.data['']
+            if len(User.objects.filter(email=recipient)) > 0:
+                subject = request.data['subject']
                 content = get_invite_template(request.data['join_link'])
                 send_mail(subject, content, 'william.herring.au@gmail.com', [recipient], fail_silently=False)
                 return Response({'Successfully sent invite'}, status=HTTP_200_OK)

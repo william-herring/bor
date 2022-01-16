@@ -72,16 +72,35 @@ Future<List<User>> searchUsers(String searchArg) async {
 
 /*
 Request: POST
-Descriptions: Creates a new team with specified title.
+Description: Creates a new team with specified title.
  */
 Future<http.Response> createTeam(String title) async {
   token = await getToken();
   final response = await http.post(
     Uri.parse(serverPort + "/api/create-team"),
     headers: { 'Content-Type': 'application/json', 'Authorization': 'Token ${token.toString()}' },
-    body: {
+    body: jsonEncode({
       "title": title
-    }
+    })
+  );
+
+  return response;
+}
+
+/*
+Request: POST
+Description: Sends an invite email to user passed
+ */
+Future<http.Response> inviteUser(String code, String recipient) async {
+  token = await getToken();
+  final response = await http.post(
+      Uri.parse(serverPort + "/api/send-invite"),
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Token ${token.toString()}' },
+      body: jsonEncode({
+        "subject": "You've been invited to a team!",
+        "recipient": recipient,
+        "join_link": "http:3000/join/$code"
+      })
   );
 
   return response;
@@ -89,7 +108,7 @@ Future<http.Response> createTeam(String title) async {
 
 /*
 Request: GET
-Descriptions: Returns current username for user logged in.
+Description: Returns current username for user logged in.
  */
 Future<String> fetchUsername() async {
   token = await getToken();
