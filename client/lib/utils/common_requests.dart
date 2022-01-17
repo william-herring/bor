@@ -97,9 +97,8 @@ Future<http.Response> inviteUser(String code, String recipient) async {
       Uri.parse(serverPort + "/api/send-invite"),
       headers: { 'Content-Type': 'application/json', 'Authorization': 'Token ${token.toString()}' },
       body: jsonEncode({
-        "subject": "You've been invited to a team!",
         "recipient": recipient,
-        "join_link": "http:3000/join/$code"
+        "join_link": "http://3000/join/$code"
       })
   );
 

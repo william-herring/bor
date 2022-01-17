@@ -1,4 +1,4 @@
-from rest_framework.serializers import ModelSerializer, CharField, EmailField, Serializer
+from rest_framework.serializers import ModelSerializer, CharField, EmailField, RelatedField
 from .models import Team, Invite
 from django.contrib.auth.models import User
 

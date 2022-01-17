@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:bor/alerts/code_alert.dart';
 import 'package:bor/objects/user_obj.dart';
 import 'package:bor/utils/common_requests.dart';
 import 'package:flutter/material.dart';
@@ -34,6 +35,8 @@ class _CreateTeamFormState extends State<CreateTeamForm> {
       for (var i in inviteUsers) {
         inviteUser(jsonDecode(value.body)["code"], i.email);
       }
+
+      showCodeDialog(context, jsonDecode(value.body)["code"]);
     });
   }
 

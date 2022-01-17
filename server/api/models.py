@@ -23,7 +23,7 @@ class Team(models.Model):
 
 
 class Invite(models.Model):
-    recipient = models.ForeignKey(User, on_delete=models.CASCADE)
+    recipient = models.EmailField(max_length=254)
     join_link = models.URLField(default='localhost:3000/join')
 
 

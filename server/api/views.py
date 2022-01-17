@@ -147,26 +147,6 @@ class DeleteTeamView(APIView):
         return Response({'Bad Request': 'Invalid code'}, status=HTTP_400_BAD_REQUEST)
 
 
-class SendInvite(APIView):
-    permission_classes = [
-        permissions.IsAuthenticated
-    ]
-    serializer_class = InviteSerializer
-
-    def post(self, request, format=None):
-        serializer = self.serializer_class(data=request.data)
-
-        if serializer.is_valid():
-            recipient = serializer.data.get('recipient')
-            join_link = serializer.data.get('join_link')
-            invite = Invite(recipient=recipient, join_link=join_link)
-            invite.save()
-
-            return Response(InviteSerializer(invite).data, status=HTTP_200_OK)
-
-        return Response({'Bad Request': 'Invalid Serializer'}, status=HTTP_200_OK)
-
-
 class JoinTeamView(APIView):
     lookup_url_kwarg = 'code'
     permission_classes = [
@@ -212,3 +192,37 @@ class GetTeamView(APIView):
             return Response({'Team not found': 'Invalid code'}, status=HTTP_404_NOT_FOUND)
 
         return Response({'Bad Request': 'Code parameter not found in request'}, status=HTTP_400_BAD_REQUEST)
+
+
+# Returns all pending invites for user
+class GetInvitesView(ListAPIView):
+    serializer_class = InviteSerializer
+    permission_classes = [
+        permissions.IsAuthenticated
+    ]
+
+    def get_queryset(self):
+        invites = Invite.objects.filter(recipient=self.request.user.email)
+
+        return invites
+
+
+# Creates an invite instance
+class SendInviteView(APIView):
+    permission_classes = [
+        permissions.IsAuthenticated
+    ]
+    serializer_class = InviteSerializer
+
+    def post(self, request, format=None):
+        serializer = self.serializer_class(data=request.data)
+
+        if serializer.is_valid():
+            recipient = serializer.data.get('recipient')
+            join_link = serializer.data.get('join_link')
+            invite = Invite(recipient=recipient, join_link=join_link)
+            invite.save()
+
+            return Response(InviteSerializer(invite).data, status=HTTP_200_OK)
+
+        return Response({'Bad Request': 'Invalid Serializer'}, status=HTTP_200_OK)
