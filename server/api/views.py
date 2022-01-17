@@ -1,3 +1,5 @@
+import os
+
 from rest_framework.generics import ListAPIView, CreateAPIView
 from rest_framework.views import APIView
 from rest_framework import permissions
@@ -9,6 +11,8 @@ from rest_framework import filters
 from django.core.mail import send_mail
 from django.contrib.auth.models import User
 from .serializers import *
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail
 
 
 # UserView should not be used for administration. It has search functionality, and is used by the client.
@@ -153,13 +157,12 @@ class SendInvite(APIView):
         serializer = self.serializer_class(data=request.data)
 
         if serializer.is_valid():
-            recipient = request.data['recipient']
-            if len(User.objects.filter(email=recipient)) > 0:
-                subject = request.data['subject']
-                content = get_invite_template(request.data['join_link'])
-                send_mail(subject, content, 'william.herring.au@gmail.com', [recipient], fail_silently=False)
-                return Response({'Successfully sent invite'}, status=HTTP_200_OK)
-            return Response({'Bad Request': 'User does not exist'}, status=HTTP_400_BAD_REQUEST)
+            recipient = serializer.data.get('recipient')
+            join_link = serializer.data.get('join_link')
+            invite = Invite(recipient=recipient, join_link=join_link)
+            invite.save()
+
+            return Response(InviteSerializer(invite).data, status=HTTP_200_OK)
 
         return Response({'Bad Request': 'Invalid Serializer'}, status=HTTP_200_OK)
 

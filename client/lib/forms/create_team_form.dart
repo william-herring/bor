@@ -154,7 +154,7 @@ class _CreateTeamFormState extends State<CreateTeamForm> {
                 });
               },
               activeColor: Colors.deepPurpleAccent,
-              title: Text("Email me the invite code", style: GoogleFonts.ubuntu()),
+              title: Text("Show me the invite code", style: GoogleFonts.ubuntu()),
             ),
 
             Container(
