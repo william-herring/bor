@@ -19,6 +19,10 @@ Future<String?> getToken() async {
   return null;
 }
 
-void setToken(FlutterSecureStorage storage, String token){
-  storage.write(key: "token",value: token);
+void deleteToken() {
+  storage.delete(key: "token");
+}
+
+void setToken(String token){
+  storage.write(key: "token", value: token);
 }

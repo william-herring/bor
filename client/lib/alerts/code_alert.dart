@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:share_plus/share_plus.dart';
 
 Future<void> showCodeDialog(BuildContext context, String code) async {
   return showDialog<void>(
@@ -23,6 +24,13 @@ class _CodeAlertState extends State<CodeAlert> {
   String code;
 
   _CodeAlertState({required this.code});
+  
+  void onShare(BuildContext context) async {
+    await Share.share(
+        "Join my team at: http://localhost:3000/join/$code or go to http://localhost:3000/join and enter $code.",
+        subject: "Join my team on Bor!"
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,14 +46,15 @@ class _CodeAlertState extends State<CodeAlert> {
 
       actions: <Widget>[
         TextButton(
-          child: Text('Go home', style: GoogleFonts.ubuntu(color: Colors.deepPurpleAccent)),
+          child: Text('Go back', style: GoogleFonts.ubuntu(color: Colors.deepPurpleAccent)),
           onPressed: () {
-            Navigator.pushReplacementNamed(context, '/home');
+            Navigator.pop(context);
+            Navigator.pop(context);
           },
         ),
 
         IconButton(
-          icon: const Icon(Icons.share), onPressed: () {  },
+          icon: const Icon(Icons.share), onPressed: () => onShare(context),
         )
       ],
     );

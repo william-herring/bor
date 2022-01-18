@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:bor/auth/tokens.dart';
 import 'package:bor/forms/validators.dart';
 import 'package:bor/main.dart';
@@ -18,6 +17,7 @@ class _RegisterFormState extends State<RegisterForm> {
   String emailInput = "";
   String userInput = "";
   String passInput = "";
+  String passInput2 = "";
   final _formKey = GlobalKey<FormState>();
   FocusNode userNode = FocusNode();
   FocusNode pass1Node = FocusNode();
@@ -25,6 +25,7 @@ class _RegisterFormState extends State<RegisterForm> {
 
   void handleSubmit() {
     _formKey.currentState!.validate();
+
     http.post(
         Uri.parse(serverPort + "/api/create-user"),
         headers: { 'Content-Type': 'application/json' },
@@ -43,9 +44,10 @@ class _RegisterFormState extends State<RegisterForm> {
         'password': passInput,
       })
     ).then((value) {
-      setToken(storage, json.decode(value.body)['token']);
-      //Redirect to home page
+      setToken(json.decode(value.body)['token']);
     });
+
+    Navigator.pushReplacementNamed(context, '/');
   }
 
   @override
@@ -191,11 +193,15 @@ class _RegisterFormState extends State<RegisterForm> {
                         }
 
                         if (value.isNotEmpty) {
+                          if (passInput != value) {
+                            return "Password does not match.";
+                          }
+
                           setState(() {
-                            passInput = value;
+                            passInput2 = value;
                           });
                         } else {
-                          return "Please enter a valid password";
+                          return "Please enter a valid password.";
                         }
                       },
 

@@ -18,7 +18,7 @@ class _CreateTeamFormState extends State<CreateTeamForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String title = "";
   bool receiveNotifications = false;
-  bool emailCode = true;
+  bool showCode = true;
   late Future<List<User>> searchResult;
   List<User> inviteUsers = [];
 
@@ -35,8 +35,9 @@ class _CreateTeamFormState extends State<CreateTeamForm> {
       for (var i in inviteUsers) {
         inviteUser(jsonDecode(value.body)["code"], i.email);
       }
-
-      showCodeDialog(context, jsonDecode(value.body)["code"]);
+      if (showCode) {
+        showCodeDialog(context, jsonDecode(value.body)["code"]);
+      }
     });
   }
 
@@ -150,10 +151,10 @@ class _CreateTeamFormState extends State<CreateTeamForm> {
               ),
 
             CheckboxListTile(
-              value: emailCode,
+              value: showCode,
               onChanged: (bool? newValue) {
                 setState(() {
-                  emailCode = !emailCode;
+                  showCode = !showCode;
                 });
               },
               activeColor: Colors.deepPurpleAccent,

@@ -1,3 +1,4 @@
+import 'package:bor/auth/tokens.dart';
 import 'package:bor/buttons/team_selector_button.dart';
 import 'package:bor/utils/common_requests.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +20,10 @@ class HomeScreen extends StatelessWidget {
         PopupMenuItem<String>(
             child: Text('Settings', style: GoogleFonts.ubuntu()), value: 'Details'),
         PopupMenuItem<String>(
+            onTap: () {
+              deleteToken();
+              Navigator.pushReplacementNamed(context, '/login');
+            },
             child: Text('Log out', style: GoogleFonts.ubuntu()), value: 'Log out'),
       ],
       elevation: 8.0,
