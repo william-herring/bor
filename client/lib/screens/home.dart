@@ -27,18 +27,20 @@ class _HomeScreenState extends State<HomeScreen> {
     return result;
   }
 
-  void _showUserMenu(context) async {
+  void _showUserMenu() async {
     await showMenu(
       context: context,
       position: const RelativeRect.fromLTRB(double.infinity, double.negativeInfinity, 100, 100),
       items: [
         PopupMenuItem<String>(
-            child: Text('Settings', style: GoogleFonts.ubuntu()), value: 'Details'),
+            child: Text('Settings', style: GoogleFonts.ubuntu()),
+            value: 'Details'
+        ),
         PopupMenuItem<String>(
-            onTap: () {
+            onTap: () => Future(() {
               deleteToken();
               Navigator.pushReplacementNamed(context, '/login');
-            },
+            }),
             child: Text('Log out', style: GoogleFonts.ubuntu()), value: 'Log out'),
       ],
       elevation: 8.0,
@@ -60,7 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     return InkWell(
                       hoverColor: Colors.white.withOpacity(0),
                       onTap: () {
-                        _showUserMenu(context);
+                        _showUserMenu();
                       },
                       child: Row(
                         children: [
@@ -100,6 +102,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
                       final teamList = getTeamNames(snapshot.data!);
+                      if (teamList.isEmpty) {
+                        return TeamSelectorButton();
+                      }
                       return TeamSelectorButton(currentTeamName: teamList[0], teamList: teamList);
                     }
 

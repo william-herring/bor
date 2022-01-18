@@ -35,6 +35,7 @@ class _TeamSelectorButtonState extends State<TeamSelectorButton> {
               return DropdownMenuItem<String>(
                 value: value,
                 child: Text(value, style: GoogleFonts.ubuntu()),
+                alignment: AlignmentDirectional.centerStart,
               );
             }).toList(),
         ),
