@@ -46,7 +46,7 @@ class App extends StatelessWidget {
       debugShowCheckedModeBanner: false,
 
       routes: {
-        '/': (context) => HomeScreen(),
+        '/': (context) => const HomeScreen(),
         '/join': (context) => const JoinTeamScreen(),
         '/create': (context) => const CreateTeamScreen(),
         '/login': (context) => LoginRegisterView(viewIndex: 0),

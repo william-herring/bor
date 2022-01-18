@@ -124,3 +124,22 @@ Future<String> fetchUsername() async {
 
   throw Exception('Failed to fetch username');
 }
+
+/*
+Request: GET
+Description: Returns all teams user is currently in
+ */
+Future<List<Team>> fetchUserTeams() async {
+  token = await getToken();
+  final response = await http.get(
+    Uri.parse(serverPort + "/api/get-user-teams"),
+    headers: { 'Content-Type': 'application/json', 'Authorization': 'Token ${token.toString()}' }
+  );
+
+  List<Team> teams = [];
+  for (var i in jsonDecode(response.body)) {
+    teams.add(Team.fromJson(i));
+  }
+
+  return teams;
+}

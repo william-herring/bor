@@ -1,16 +1,31 @@
 import 'package:bor/auth/tokens.dart';
 import 'package:bor/buttons/team_selector_button.dart';
+import 'package:bor/objects/team_obj.dart';
 import 'package:bor/utils/common_requests.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'dart:async';
-import '../main.dart';
 
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({Key? key}) : super(key: key);
 
-class HomeScreen extends StatelessWidget {
-  HomeScreen({Key? key}) : super(key: key);
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   Future<String> username = fetchUsername();
+  Future<List<Team>> teams = fetchUserTeams();
 
+  List<String> getTeamNames(List<Team> teams) {
+    List<String> result = [];
+
+    for (var i in teams) {
+      result.add(i.title);
+    }
+
+    return result;
+  }
 
   void _showUserMenu(context) async {
     await showMenu(
@@ -80,7 +95,17 @@ class HomeScreen extends StatelessWidget {
                       fontSize: 46
                   ),
                 ),
-                TeamSelectorButton(),
+                FutureBuilder<List<Team>>(
+                  future: teams,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      final teamList = getTeamNames(snapshot.data!);
+                      return TeamSelectorButton(currentTeamName: teamList[0], teamList: teamList);
+                    }
+
+                    return const CircularProgressIndicator(color: Colors.deepPurpleAccent);
+                  },
+                ),
                 ListTile(
                   trailing: const Icon(Icons.home_filled, color: Colors.deepPurpleAccent, size: 26.0),
                   title: Text("Home", style: GoogleFonts.ubuntu(fontWeight: FontWeight.w500, color: Colors.deepPurpleAccent)),
