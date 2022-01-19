@@ -1,10 +1,8 @@
-import 'package:bor/auth/tokens.dart';
-import 'package:bor/buttons/team_selector_button.dart';
-import 'package:bor/objects/team_obj.dart';
 import 'package:bor/utils/common_requests.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'dart:async';
+import 'package:http/http.dart' as http;
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -14,185 +12,31 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  Future<String> username = fetchUsername();
-  Future<List<Team>> teams = fetchUserTeams();
-
-  List<String> getTeamNames(List<Team> teams) {
-    List<String> result = [];
-
-    for (var i in teams) {
-      result.add(i.title);
-    }
-
-    return result;
-  }
-
-  void _showUserMenu() async {
-    await showMenu(
-      context: context,
-      position: const RelativeRect.fromLTRB(double.infinity, double.negativeInfinity, 100, 100),
-      items: [
-        PopupMenuItem<String>(
-            child: Text('Settings', style: GoogleFonts.ubuntu()),
-            value: 'Details'
-        ),
-        PopupMenuItem<String>(
-            onTap: () => Future(() {
-              deleteToken();
-              Navigator.pushReplacementNamed(context, '/login');
-            }),
-            child: Text('Log out', style: GoogleFonts.ubuntu()), value: 'Log out'),
-      ],
-      elevation: 8.0,
-    );
-  }
+  Future<http.Response> invites = fetchUserInvites();
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          foregroundColor: Colors.deepPurpleAccent,
-          actions: [
-            FutureBuilder<String>(
-                future: username,
+    return Padding(
+      padding: const EdgeInsets.all(32.0),
+      child: Column(
+        children: [
+          Text("Your feed", style: GoogleFonts.ubuntu(fontWeight: FontWeight.bold, fontSize: 30.0)),
+          ListView(
+            scrollDirection: Axis.vertical,
+            shrinkWrap: true,
+            children: [
+              FutureBuilder<http.Response>(
+                future: invites,
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
-                    return InkWell(
-                      hoverColor: Colors.white.withOpacity(0),
-                      onTap: () {
-                        _showUserMenu();
-                      },
-                      child: Row(
-                        children: [
-                          const Icon(Icons.account_circle_sharp, size: 30.0,),
-                          Padding(
-                              padding: const EdgeInsets.only(right: 16.0, left: 8.0),
-                              child: Text(snapshot.data!.toString(), style: GoogleFonts.ubuntu(fontSize: 16))
-                          ),
-                        ],
-                      ),
-                    );
+                    return SelectableText(snapshot.data!.body);
                   }
-                  return const CircularProgressIndicator(color: Colors.deepPurpleAccent);
-                }
-            )
-          ]
-        ),
-        drawer: ClipRRect(
-          borderRadius: const BorderRadius.only(
-              topRight: Radius.circular(26.0),
-              bottomRight: Radius.circular(26.0)
-          ),
-          child: Drawer(
-            child: ListView(
-              padding: const EdgeInsets.all(8.0),
-              children: [
-                Text(
-                  "Bor",
-                  style: GoogleFonts.ubuntu(
-                      color: Colors.deepPurpleAccent,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 46
-                  ),
-                ),
-                FutureBuilder<List<Team>>(
-                  future: teams,
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      final teamList = getTeamNames(snapshot.data!);
-                      if (teamList.isEmpty) {
-                        return TeamSelectorButton();
-                      }
-                      return TeamSelectorButton(currentTeamName: teamList[0], teamList: teamList);
-                    }
-
-                    return const CircularProgressIndicator(color: Colors.deepPurpleAccent);
-                  },
-                ),
-                ListTile(
-                  trailing: const Icon(Icons.home_filled, color: Colors.deepPurpleAccent, size: 26.0),
-                  title: Text("Home", style: GoogleFonts.ubuntu(fontWeight: FontWeight.w500, color: Colors.deepPurpleAccent)),
-                  onTap: () {},
-                ),
-                ListTile(
-                  trailing: const Icon(Icons.library_books_sharp, size: 26.0),
-                  title: Text("Projects", style: GoogleFonts.ubuntu(fontWeight: FontWeight.w500)),
-                  onTap: () {},
-                ),
-                ListTile(
-                  trailing: const Icon(Icons.dashboard, size: 26.0),
-                  title: Text("Team board", style: GoogleFonts.ubuntu(fontWeight: FontWeight.w500)),
-                  onTap: () {},
-                ),
-                ListTile(
-                  trailing: const Icon(Icons.task_sharp, size: 26.0),
-                  title: Text("Tasks", style: GoogleFonts.ubuntu(fontWeight: FontWeight.w500)),
-                  onTap: () {},
-                ),
-                ListTile(
-                  trailing: const Icon(Icons.show_chart, size: 26.0),
-                  title: Text("Statistics", style: GoogleFonts.ubuntu(fontWeight: FontWeight.w500)),
-                  onTap: () {},
-                ),
-                ListTile(
-                  trailing: const Icon(Icons.people_sharp, size: 26.0),
-                  title: Text("Members", style: GoogleFonts.ubuntu(fontWeight: FontWeight.w500)),
-                  onTap: () {},
-                )
-              ]
-            ),
-          ),
-        ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-                "You're not part of any teams. To begin, join or create a team.",
-              style: GoogleFonts.ubuntu(fontSize: 25, fontWeight: FontWeight.bold),
-              textAlign: TextAlign.center,
-            ),
-            Container(
-              margin: const EdgeInsets.all(16.0),
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, '/join');
+                  return Placeholder();
                 },
-                child: Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Text(
-                    "Join",
-                    style: GoogleFonts.ubuntu(
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.deepPurpleAccent,
-                ),
-              ),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/create');
-              },
-              child: Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Text(
-                  "Create",
-                  style: GoogleFonts.ubuntu(
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-              style: ElevatedButton.styleFrom(
-                primary: Colors.deepPurpleAccent,
-              ),
-            ),
-          ],
-        ),
+              )
+            ],
+          ),
+        ],
       ),
     );
   }

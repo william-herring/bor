@@ -37,6 +37,8 @@ class _CreateTeamFormState extends State<CreateTeamForm> {
       }
       if (showCode) {
         showCodeDialog(context, jsonDecode(value.body)["code"]);
+      } else {
+        Navigator.pushReplacementNamed(context, '/');
       }
     });
   }
@@ -46,7 +48,6 @@ class _CreateTeamFormState extends State<CreateTeamForm> {
 
     for (var i in inviteUsers) {
       final username = i.username;
-      final email = i.email;
 
       tiles.add(
           ListTile(
@@ -68,7 +69,6 @@ class _CreateTeamFormState extends State<CreateTeamForm> {
 
     for (var i in users) {
       final username = i.username;
-      final email = i.email;
 
       List<String> invitedUsernames = [];
       for (var i in inviteUsers) {

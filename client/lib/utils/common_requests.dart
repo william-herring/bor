@@ -98,9 +98,11 @@ Future<http.Response> inviteUser(String code, String recipient) async {
       headers: { 'Content-Type': 'application/json', 'Authorization': 'Token ${token.toString()}' },
       body: jsonEncode({
         "recipient": recipient,
-        "join_link": "http://3000/join/$code"
+        "join_link": "http://localhost:3000/join/$code"
       })
   );
+
+  print(response.body);
 
   return response;
 }
@@ -142,4 +144,14 @@ Future<List<Team>> fetchUserTeams() async {
   }
 
   return teams;
+}
+
+Future<http.Response> fetchUserInvites() async {
+  token = await getToken();
+  final response = await http.get(
+    Uri.parse(serverPort + "/api/get-invites"),
+    headers: { 'Content-Type': 'application/json', 'Authorization': 'Token ${token.toString()}' }
+  );
+
+  return response;
 }

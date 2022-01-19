@@ -13,5 +13,5 @@ urlpatterns = [
     path('get-username', GetUsernameView.as_view()),
     path('get-user-teams', GetUserTeams.as_view()),
     path('send-invite', SendInviteView().as_view()),
-    path('get-invites', GetInvitesView().as_view())
+    path('get-invites', GetInvitesView().as_view()),
 ]

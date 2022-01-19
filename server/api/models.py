@@ -24,7 +24,7 @@ class Team(models.Model):
 
 class Invite(models.Model):
     recipient = models.EmailField(max_length=254)
-    join_link = models.URLField(default='localhost:3000/join')
+    join_link = models.CharField(default='localhost:3000/join', max_length=500)
 
 
 class Project(models.Model):

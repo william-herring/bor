@@ -225,4 +225,4 @@ class SendInviteView(APIView):
 
             return Response(InviteSerializer(invite).data, status=HTTP_200_OK)
 
-        return Response({'Bad Request': 'Invalid Serializer'}, status=HTTP_200_OK)
+        return Response({'Bad Request': 'Invalid Serializer'}, status=HTTP_400_BAD_REQUEST)
