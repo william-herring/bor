@@ -46,11 +46,11 @@ class _TeamViewState extends State<TeamView> {
   void _showUserMenu() async {
     await showMenu(
       context: context,
-      position: const RelativeRect.fromLTRB(double.infinity, double.negativeInfinity, 100, 100),
+      position: const RelativeRect.fromLTRB(0, 0, 0, 0),
       items: [
         PopupMenuItem<String>(
             child: Text('Settings', style: GoogleFonts.ubuntu()),
-            value: 'Details'
+            value: 'Settings'
         ),
         PopupMenuItem<String>(
             onTap: () => Future(() {

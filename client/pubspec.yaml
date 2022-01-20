@@ -39,6 +39,7 @@ dependencies:
   animations: ^2.0.2
   flutter_secure_storage: ^5.0.2
   share_plus: ^3.0.4
+  url_launcher: ^6.0.18
 
 dev_dependencies:
   flutter_test:

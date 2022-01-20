@@ -16,6 +16,26 @@ class _TeamSelectorButtonState extends State<TeamSelectorButton> {
 
   _TeamSelectorButtonState(this.teamValue, this.teams);
 
+  void _showSettingsMenu() async {
+    await showMenu(
+      context: context,
+      position: const RelativeRect.fromLTRB(double.infinity, 0, 0, 0),
+      items: [
+        PopupMenuItem<String>(
+            child: Text('Join team', style: GoogleFonts.ubuntu()),
+            value: 'Join',
+            onTap: () => Future(() => Navigator.pushNamed(context, '/join')),
+        ),
+        PopupMenuItem<String>(
+            child: Text('Create team', style: GoogleFonts.ubuntu()),
+            value: 'Create team',
+            onTap: () => Future(() => Navigator.pushNamed(context, '/create')),
+        ),
+      ],
+      elevation: 8.0,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -43,7 +63,7 @@ class _TeamSelectorButtonState extends State<TeamSelectorButton> {
                 }).toList(),
             ),
           ),
-          IconButton(icon: const Icon(Icons.settings, color: Colors.deepPurpleAccent), onPressed: () {}),
+          IconButton(icon: const Icon(Icons.settings, color: Colors.black45), onPressed: () => _showSettingsMenu()),
         ],
       ),
     );

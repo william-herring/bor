@@ -98,7 +98,7 @@ Future<http.Response> inviteUser(String code, String recipient) async {
       headers: { 'Content-Type': 'application/json', 'Authorization': 'Token ${token.toString()}' },
       body: jsonEncode({
         "recipient": recipient,
-        "join_link": "http://localhost:3000/join/$code"
+        "join_code": code,
       })
   );
 
