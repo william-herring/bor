@@ -219,8 +219,8 @@ class SendInviteView(APIView):
 
         if serializer.is_valid():
             recipient = serializer.data.get('recipient')
-            join_link = serializer.data.get('join_link')
-            invite = Invite(recipient=recipient, join_link=join_link)
+            join_code = serializer.data.get('join_code')
+            invite = Invite(recipient=recipient, join_code=join_code)
             invite.save()
 
             return Response(InviteSerializer(invite).data, status=HTTP_200_OK)

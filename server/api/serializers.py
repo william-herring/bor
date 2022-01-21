@@ -43,4 +43,4 @@ class UpdateTeamSerializer(ModelSerializer):
 class InviteSerializer(ModelSerializer):
     class Meta:
         model = Invite
-        fields = '__all__'
+        fields = ('recipient', 'join_code')
