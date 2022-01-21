@@ -2,7 +2,8 @@ import 'package:bor/auth/tokens.dart';
 import 'package:bor/buttons/team_selector_button.dart';
 import 'package:bor/objects/team_obj.dart';
 import 'package:bor/screens/home.dart';
-import 'package:bor/screens/no-team.dart';
+import 'package:bor/screens/no_team.dart';
+import 'package:bor/screens/projects.dart';
 import 'package:bor/utils/common_requests.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -129,13 +130,14 @@ class _TeamViewState extends State<TeamView> {
                 ),
                 ListTile(
                   trailing: const Icon(Icons.home_filled, color: Colors.deepPurpleAccent, size: 26.0),
-                  title: Text("Home", style: GoogleFonts.ubuntu(fontWeight: FontWeight.w500, color: Colors.deepPurpleAccent)),
+                  title: Text("Home", style: GoogleFonts.ubuntu(fontWeight: FontWeight.w500,
+                      color: Colors.deepPurpleAccent)),
                   onTap: () {},
                 ),
                 ListTile(
                   trailing: const Icon(Icons.library_books_sharp, size: 26.0),
                   title: Text("Projects", style: GoogleFonts.ubuntu(fontWeight: FontWeight.w500)),
-                  onTap: () {},
+                  onTap: () => controller.jumpToPage(2),
                 ),
                 ListTile(
                   trailing: const Icon(Icons.dashboard, size: 26.0),
@@ -165,7 +167,8 @@ class _TeamViewState extends State<TeamView> {
         controller: controller,
         children: const [
           NoTeamScreen(), //Index 0 is always reserved for no team display.
-          HomeScreen()
+          HomeScreen(),
+          ProjectListScreen(),
         ],
       ),
     );

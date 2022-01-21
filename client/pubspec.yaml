@@ -41,6 +41,7 @@ dependencies:
   share_plus: ^3.0.4
   url_launcher: ^6.0.18
   intl: ^0.17.0
+  badges: ^2.0.2
 
 dev_dependencies:
   flutter_test:
