@@ -9,30 +9,55 @@ class ProjectListScreen extends StatefulWidget {
 }
 
 class _ProjectListScreenState extends State<ProjectListScreen> {
+  int selectedTiles = 0;
+
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(32.0),
-      child: Column(
-        children: [
-          Text("Projects", style: GoogleFonts.ubuntu(fontWeight: FontWeight.bold, fontSize: 30.0)),
-          ListView(
-            scrollDirection: Axis.vertical,
-            shrinkWrap: true,
-            children: [
-              ProjectTile(
-                onSelected: () {},
-                title: "Very important project",
-                description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, "
-                    "sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-                status: Chip(
-                  backgroundColor: Colors.green,
-                  label: Text("In progress", style: GoogleFonts.ubuntu(color: Colors.white)),
-                ),
-              )
-            ],
-          )
-        ],
+    return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.create),
+        backgroundColor: Colors.deepPurpleAccent,
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(16.0))
+        ),
+        onPressed: () {},
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(32.0),
+        child: Column(
+          children: [
+            Text("Projects", style: GoogleFonts.ubuntu(fontWeight: FontWeight.bold, fontSize: 30.0)),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: (selectedTiles > 0)? [
+                IconButton(
+                    onPressed: () {},
+                    icon: const Icon(Icons.more_vert),
+                    color: Colors.deepPurpleAccent,
+                    iconSize: 26,
+                )
+              ] : [],
+            ),
+            ListView(
+              scrollDirection: Axis.vertical,
+              shrinkWrap: true,
+              children: [
+                ProjectTile(
+                  onSelected: (selected) => setState(() {
+                    selectedTiles = selected? selectedTiles + 1 : selectedTiles - 1;
+                  }),
+                  title: "Very important project",
+                  description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, "
+                      "sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+                  status: Chip(
+                    backgroundColor: Colors.green,
+                    label: Text("In progress", style: GoogleFonts.ubuntu(color: Colors.white)),
+                  ),
+                )
+              ],
+            )
+          ],
+        ),
       ),
     );
   }
@@ -69,7 +94,7 @@ class _ProjectTileState extends State<ProjectTile> {
       onTap: () {},
       leading: Checkbox(
         onChanged: (value) {
-          onSelected();
+          onSelected(!selected);
           setState(() {
             selected = value!;
           });
