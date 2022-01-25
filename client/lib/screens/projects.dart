@@ -1,3 +1,7 @@
+import 'package:bor/alerts/form_alert.dart';
+import 'package:bor/forms/create_project_form.dart';
+import 'package:bor/forms/create_team_form.dart';
+import 'package:bor/forms/login_form.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -20,7 +24,11 @@ class _ProjectListScreenState extends State<ProjectListScreen> {
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(16.0))
         ),
-        onPressed: () {},
+        onPressed: () => showFormDialog(
+            context,
+            const [CreateProjectForm()],
+            "Create project"
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(32.0),
@@ -51,7 +59,7 @@ class _ProjectListScreenState extends State<ProjectListScreen> {
                       "sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
                   status: Chip(
                     backgroundColor: Colors.green,
-                    label: Text("In progress", style: GoogleFonts.ubuntu(color: Colors.white)),
+                    label: Text("Open", style: GoogleFonts.ubuntu(color: Colors.white)),
                   ),
                 )
               ],

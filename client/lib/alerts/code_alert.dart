@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:share_plus/share_plus.dart';
 
 Future<void> showCodeDialog(BuildContext context, String code) async {
-  return showDialog<void>(
+  return await showDialog<void>(
     context: context,
     barrierDismissible: false,
     builder: (BuildContext context) {

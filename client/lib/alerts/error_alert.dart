@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 Future<void> showErrorDialog(BuildContext context, String errorDetails) async {
-  return showDialog<void>(
+  return await showDialog<void>(
     context: context,
     barrierDismissible: false,
     builder: (BuildContext context) {

@@ -132,7 +132,7 @@ class _TeamViewState extends State<TeamView> {
                   trailing: const Icon(Icons.home_filled, color: Colors.deepPurpleAccent, size: 26.0),
                   title: Text("Home", style: GoogleFonts.ubuntu(fontWeight: FontWeight.w500,
                       color: Colors.deepPurpleAccent)),
-                  onTap: () {},
+                  onTap: () => controller.jumpToPage(1),
                 ),
                 ListTile(
                   trailing: const Icon(Icons.library_books_sharp, size: 26.0),

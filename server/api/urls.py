@@ -14,4 +14,5 @@ urlpatterns = [
     path('get-user-teams', GetUserTeams.as_view()),
     path('send-invite', SendInviteView().as_view()),
     path('get-invites', GetInvitesView().as_view()),
+    path('create-project', CreateProjectView().as_view())
 ]

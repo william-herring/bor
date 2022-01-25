@@ -29,8 +29,9 @@ class Invite(models.Model):
 
 
 class Project(models.Model):
-    team = models.ForeignKey(Team, on_delete=models.CASCADE)
+    team_code = models.CharField(max_length=8)
     title = models.CharField(max_length=75)
+    description = models.CharField(max_length=150)
     open = models.BooleanField(default=True)
 
 

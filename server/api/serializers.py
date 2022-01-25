@@ -1,5 +1,5 @@
-from rest_framework.serializers import ModelSerializer, CharField, EmailField, RelatedField
-from .models import Team, Invite
+from rest_framework.serializers import ModelSerializer, CharField, EmailField, StringRelatedField
+from .models import Team, Invite, Project
 from django.contrib.auth.models import User
 
 
@@ -44,3 +44,9 @@ class InviteSerializer(ModelSerializer):
     class Meta:
         model = Invite
         fields = ('recipient', 'join_code')
+
+
+class ProjectSerializer(ModelSerializer):
+    class Meta:
+        model = Project
+        fields = '__all__'

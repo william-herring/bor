@@ -4,7 +4,7 @@ from rest_framework.generics import ListAPIView, CreateAPIView
 from rest_framework.views import APIView
 from rest_framework import permissions
 from .email_templates import get_invite_template
-from .models import Team
+from .models import Team, Project
 from rest_framework.status import *
 from rest_framework.response import Response
 from rest_framework import filters
@@ -224,5 +224,30 @@ class SendInviteView(APIView):
             invite.save()
 
             return Response(InviteSerializer(invite).data, status=HTTP_200_OK)
+
+        return Response({'Bad Request': 'Invalid Serializer'}, status=HTTP_400_BAD_REQUEST)
+
+
+class CreateProjectView(APIView):
+    permission_classes = [
+        permissions.AllowAny  # Change to authentication
+    ]
+    serializer_class = ProjectSerializer
+
+    def post(self, request, format=None):
+        serializer = self.serializer_class(data=request.data)
+
+        if serializer.is_valid():
+            team = serializer.data.get('team_code')
+            queryset = Team.objects.filter(team_code=team)
+            if queryset.exists():
+                title = serializer.data.get('title')
+                description = serializer.data.get('description')
+                open = serializer.data.get('open')
+                project = Project(team_code=team, title=title, description=description, open=open)
+                project.save()
+                return Response(ProjectSerializer(project).data, status=HTTP_201_CREATED)
+
+            return Response({'Not Found': 'Team does not exist'}, status=HTTP_404_NOT_FOUND)
 
         return Response({'Bad Request': 'Invalid Serializer'}, status=HTTP_400_BAD_REQUEST)
