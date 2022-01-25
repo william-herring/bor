@@ -20,6 +20,7 @@ class _TeamViewState extends State<TeamView> {
   Future<String> username = fetchUsername();
   Future<List<Team>> teams = fetchUserTeams();
   late final PageController controller;
+  String currentTeamName = "No team selected";
 
   @override
   void initState() {
@@ -31,6 +32,8 @@ class _TeamViewState extends State<TeamView> {
       if (value.isEmpty) {
         controller.jumpToPage(0);
       }
+
+      currentTeamName = value[0].title;
     });
   }
 
@@ -47,7 +50,7 @@ class _TeamViewState extends State<TeamView> {
   void _showUserMenu() async {
     await showMenu(
       context: context,
-      position: const RelativeRect.fromLTRB(0, 0, 0, 0),
+      position: const RelativeRect.fromLTRB(double.infinity, 0, 0, 0),
       items: [
         PopupMenuItem<String>(
             child: Text('Settings', style: GoogleFonts.ubuntu()),
@@ -120,9 +123,13 @@ class _TeamViewState extends State<TeamView> {
                     if (snapshot.hasData) {
                       final teamList = getTeamNames(snapshot.data!);
                       if (teamList.isEmpty) {
-                        return TeamSelectorButton();
+                        return TeamSelectorButton(onSelected: (value) => setState(() {
+                          currentTeamName = value;
+                        }));
                       }
-                      return TeamSelectorButton(currentTeamName: teamList[0], teamList: teamList);
+                      return TeamSelectorButton(currentTeamName: currentTeamName, teamList: teamList, onSelected: (value) => setState(() {
+                        currentTeamName = value;
+                      }));
                     }
 
                     return const CircularProgressIndicator(color: Colors.deepPurpleAccent);

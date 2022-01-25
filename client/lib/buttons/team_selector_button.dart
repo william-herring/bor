@@ -4,17 +4,19 @@ import 'package:google_fonts/google_fonts.dart';
 class TeamSelectorButton extends StatefulWidget {
   String currentTeamName;
   List<String> teamList;
-  TeamSelectorButton({Key? key, this.currentTeamName = "No team selected", this.teamList = const ["No team selected"]}) : super(key: key);
+  final Function onSelected;
+  TeamSelectorButton({Key? key, this.currentTeamName = "No team selected", this.teamList = const ["No team selected"], required this.onSelected}) : super(key: key);
 
   @override
-  _TeamSelectorButtonState createState() => _TeamSelectorButtonState(currentTeamName, teamList);
+  _TeamSelectorButtonState createState() => _TeamSelectorButtonState(currentTeamName, teamList, onSelected);
 }
 
 class _TeamSelectorButtonState extends State<TeamSelectorButton> {
   String teamValue = "";
   List<String> teams = ["No team selected"];
+  final Function onSelected;
 
-  _TeamSelectorButtonState(this.teamValue, this.teams);
+  _TeamSelectorButtonState(this.teamValue, this.teams, this.onSelected);
 
   void _showSettingsMenu() async {
     await showMenu(
@@ -49,6 +51,7 @@ class _TeamSelectorButtonState extends State<TeamSelectorButton> {
                 value: teamValue,
 
                 onChanged: (String? value) {
+                  onSelected(value);
                   setState(() {
                     teamValue = value!;
                   });
