@@ -25,7 +25,7 @@ class _TeamSelectorButtonState extends State<TeamSelectorButton> {
       items: [
         PopupMenuItem<String>(
             child: Text('Join team', style: GoogleFonts.ubuntu()),
-            value: 'Join',
+            value: 'Join team',
             onTap: () => Future(() => Navigator.pushNamed(context, '/join')),
         ),
         PopupMenuItem<String>(

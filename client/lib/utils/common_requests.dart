@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:bor/auth/tokens.dart';
+import 'package:bor/objects/project_obj.dart';
 import 'package:bor/objects/team_obj.dart';
 import 'package:bor/objects/user_obj.dart';
 import 'package:http/http.dart' as http;
@@ -72,23 +73,6 @@ Future<List<User>> searchUsers(String searchArg) async {
 
 /*
 Request: POST
-Description: Creates a new team with specified title.
- */
-Future<http.Response> createTeam(String title) async {
-  token = await getToken();
-  final response = await http.post(
-    Uri.parse(serverPort + "/api/create-team"),
-    headers: { 'Content-Type': 'application/json', 'Authorization': 'Token ${token.toString()}' },
-    body: jsonEncode({
-      "title": title
-    })
-  );
-
-  return response;
-}
-
-/*
-Request: POST
 Description: Sends an invite email to user passed
  */
 Future<http.Response> inviteUser(String code, String recipient) async {
@@ -103,6 +87,23 @@ Future<http.Response> inviteUser(String code, String recipient) async {
   );
 
   print(response.body);
+
+  return response;
+}
+
+/*
+Request: POST
+Description: Creates a new team with specified title.
+ */
+Future<http.Response> createTeam(String title) async {
+  token = await getToken();
+  final response = await http.post(
+    Uri.parse(serverPort + "/api/create-team"),
+    headers: { 'Content-Type': 'application/json', 'Authorization': 'Token ${token.toString()}' },
+    body: jsonEncode({
+      "title": title
+    })
+  );
 
   return response;
 }
@@ -154,4 +155,28 @@ Future<http.Response> fetchUserInvites() async {
   );
 
   return response;
+}
+
+/*
+Request: POST
+Description: Creates a new project with specified title/description/status.
+ */
+Future<Project> createProject(String title, String description, bool open, String teamCode) async {
+  token = await getToken();
+  final response = await http.post(
+    Uri.parse(serverPort + "/api/create-project"),
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Token ${token.toString()}' },
+      body: jsonEncode({
+        'team_code': teamCode,
+        'title': title,
+        'description': description,
+        'open': open,
+      })
+  );
+
+  if (response.statusCode != 200) {
+    throw Exception('Failed to retrieve Project data. HTTP ${response.statusCode}');
+  }
+
+  return Project.fromJson(jsonDecode(response.body));
 }

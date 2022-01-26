@@ -172,6 +172,7 @@ class _TeamViewState extends State<TeamView> {
         ),
       body: PageView(
         controller: controller,
+        physics: const NeverScrollableScrollPhysics(),
         children: const [
           NoTeamScreen(), //Index 0 is always reserved for no team display.
           HomeScreen(),
