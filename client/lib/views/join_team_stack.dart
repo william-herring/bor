@@ -152,73 +152,68 @@ class _JoinTeamStackState extends State<JoinTeamStack> {
               future: requestedTeam,
               builder: (context, snapshot) {
                 if (snapshot.hasData && !codeNotFound) {
-                  return Row(
+                  return Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Column(
+                      Padding(
+                        padding: const EdgeInsets.all(40.0),
+                        child: SizedBox(
+                          width: 900,
+                          child: Text(
+                            snapshot.data!.title,
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.ubuntu(
+                              fontSize: 60.0,
+                              fontWeight: FontWeight.w500,
+                            ),
+                            overflow: TextOverflow.clip,
+                          ),
+                        ),
+                      ),
+                      ElevatedButton(
+                          onPressed: () async {
+                            final response = await joinTeam(snapshot.data!.code);
+                            if (response.statusCode != 200) {
+                              await showErrorDialog(
+                                context,
+                                jsonEncode(
+                                  {
+                                    "Response": response.body.toString(),
+                                    "Status": response.statusCode,
+                                  }
+                                )
+                              );
+                            } else {
+                              Navigator.pushNamed(context, '/');
+                            }
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(12.0),
+                            child: Text(
+                              "Join",
+                              style: GoogleFonts.ubuntu(
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.deepPurpleAccent,
+                        ),
+                      ),
+                      Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Padding(
-                            padding: const EdgeInsets.all(40.0),
-                            child: SizedBox(
-                              width: 900,
-                              child: Text(
-                                snapshot.data!.title,
-                                textAlign: TextAlign.center,
-                                style: GoogleFonts.ubuntu(
-                                  fontSize: 60.0,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                                overflow: TextOverflow.clip,
-                              ),
-                            ),
+                            padding: const EdgeInsets.all(15.0),
+                            child: IconButton(onPressed: () => setState(() {
+                              isTeamInitialized = false;
+                              codeInput = "";
+                              stackIndex -= 1;
+                            }),
+                                icon: const Icon(Icons.arrow_back)),
                           ),
-                          ElevatedButton(
-                              onPressed: () async {
-                                final response = await joinTeam(snapshot.data!.code);
-                                if (response.statusCode != 200) {
-                                  await showErrorDialog(
-                                    context,
-                                    jsonEncode(
-                                      {
-                                        "Response": response.body.toString(),
-                                        "Status": response.statusCode,
-                                      }
-                                    )
-                                  );
-                                } else {
-                                  Navigator.pushNamed(context, '/');
-                                }
-                              },
-                              child: Padding(
-                                padding: const EdgeInsets.all(12.0),
-                                child: Text(
-                                  "Join",
-                                  style: GoogleFonts.ubuntu(
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                            style: ElevatedButton.styleFrom(
-                              primary: Colors.deepPurpleAccent,
-                            ),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(15.0),
-                                child: IconButton(onPressed: () => setState(() {
-                                  isTeamInitialized = false;
-                                  codeInput = "";
-                                  stackIndex -= 1;
-                                }),
-                                    icon: const Icon(Icons.arrow_back)),
-                              ),
-                            ],
-                          )
                         ],
-                      ),
+                      )
                     ],
                   );
                 } else if (codeNotFound) {
