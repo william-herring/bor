@@ -3,6 +3,8 @@ import 'package:bor/screens/register.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../main.dart';
+
 class LoginRegisterView extends StatefulWidget {
   int viewIndex = 0;
   LoginRegisterView({Key? key, viewIndex = 0}) : super(key: key);
@@ -45,6 +47,7 @@ class _LoginRegisterViewState extends State<LoginRegisterView> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
+        foregroundColor: Colors.deepPurpleAccent,
         elevation: 0,
         leadingWidth: 400,
         leading: Container(
@@ -52,12 +55,20 @@ class _LoginRegisterViewState extends State<LoginRegisterView> {
           child: Text(
             "Bor",
             style: GoogleFonts.ubuntu(
-                color: Colors.deepPurpleAccent,
                 fontWeight: FontWeight.bold,
                 fontSize: 46
             ),
           ),
         ),
+        actions: [
+          Container(
+            margin: const EdgeInsets.only(right: 16.0),
+            child: IconButton(onPressed: () { toggleTheme(); setState(() {}); },
+                icon: Icon(App.themeNotifier.value == ThemeMode.light? Icons.dark_mode : Icons.light_mode,
+                    size: 30.0)
+            ),
+          ),
+        ],
       ),
 
       body: PageView(
