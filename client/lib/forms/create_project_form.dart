@@ -1,3 +1,4 @@
+import 'package:bor/utils/common_requests.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -17,6 +18,7 @@ class _CreateProjectFormState extends State<CreateProjectForm> {
   void handleSubmit() {
     final validation = _formKey.currentState!.validate();
     if (validation) {
+      createProject(title, description, open, '4LIFLK');
       Navigator.pop(context);
     }
   }

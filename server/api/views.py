@@ -50,15 +50,6 @@ class GetUsernameView(APIView):
             return Response({'Bad Request': 'Failed to retrieve user data'}, status=HTTP_400_BAD_REQUEST)
 
 
-# Can be used for administration. Returns a list of all teams in database
-class TeamView(ListAPIView):
-    queryset = Team.objects.all()
-    serializer_class = TeamSerializer
-    permission_classes = [
-        permissions.IsAdminUser
-    ]
-
-
 # Returns a list of all teams that the user is currently part of
 class GetUserTeams(ListAPIView):
     serializer_class = TeamSerializer
@@ -239,7 +230,7 @@ class CreateProjectView(APIView):
 
         if serializer.is_valid():
             team = serializer.data.get('team_code')
-            queryset = Team.objects.filter(team_code=team)
+            queryset = Team.objects.filter(code=team)
             if queryset.exists():
                 title = serializer.data.get('title')
                 description = serializer.data.get('description')
