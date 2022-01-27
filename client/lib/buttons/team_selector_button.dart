@@ -66,7 +66,7 @@ class _TeamSelectorButtonState extends State<TeamSelectorButton> {
                 }).toList(),
             ),
           ),
-          IconButton(icon: const Icon(Icons.settings, color: Colors.black45), onPressed: () => _showSettingsMenu()),
+          IconButton(icon: const Icon(Icons.settings, color: Colors.deepPurpleAccent), onPressed: () => _showSettingsMenu()),
         ],
       ),
     );

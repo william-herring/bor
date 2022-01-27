@@ -1,5 +1,6 @@
 import 'package:bor/auth/tokens.dart';
 import 'package:bor/buttons/team_selector_button.dart';
+import 'package:bor/main.dart';
 import 'package:bor/objects/team_obj.dart';
 import 'package:bor/screens/home.dart';
 import 'package:bor/screens/no_team.dart';
@@ -20,7 +21,7 @@ class _TeamViewState extends State<TeamView> {
   Future<String> username = fetchUsername();
   Future<List<Team>> teams = fetchUserTeams();
   late final PageController controller;
-  late final Team currentTeam;
+  late Team currentTeam;
   String currentTeamName = "No team selected";
 
   @override
@@ -77,6 +78,13 @@ class _TeamViewState extends State<TeamView> {
           elevation: 0,
           foregroundColor: Colors.deepPurpleAccent,
           actions: [
+            Container(
+              margin: const EdgeInsets.only(right: 16.0),
+              child: IconButton(onPressed: () { toggleTheme(); setState(() {}); },
+                  icon: Icon(App.themeNotifier.value == ThemeMode.light? Icons.dark_mode : Icons.light_mode,
+                      size: 30.0)
+              ),
+            ),
             FutureBuilder<String>(
                 future: username,
                 builder: (context, snapshot) {
@@ -88,7 +96,7 @@ class _TeamViewState extends State<TeamView> {
                       },
                       child: Row(
                         children: [
-                          const Icon(Icons.account_circle_sharp, size: 30.0,),
+                          const Icon(Icons.account_circle_sharp, size: 30.0),
                           Padding(
                               padding: const EdgeInsets.only(right: 16.0, left: 8.0),
                               child: Text(snapshot.data!.toString(), style: GoogleFonts.ubuntu(fontSize: 16))

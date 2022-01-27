@@ -19,7 +19,7 @@ class _ProjectListScreenState extends State<ProjectListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.create),
+        child: const Icon(Icons.create, color: Colors.white),
         backgroundColor: Colors.deepPurpleAccent,
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(16.0))
