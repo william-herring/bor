@@ -5,17 +5,22 @@ import 'package:bor/views/login_register_view.dart';
 import 'package:flutter/material.dart';
 import 'package:bor/auth/tokens.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'objects/team_obj.dart';
 
-const serverPort = "http://127.0.0.1:8000";
+// GLOBALS
+const apiPort = "http://127.0.0.1:8000";
 late SharedPreferences prefs;
 String? token = "";
+late Team currentTeam;
 
+// Entry point
 void main() async {
   prefs = await SharedPreferences.getInstance();
   token = await getToken();
   runApp(const App());
 }
 
+// Theme preferences
 void toggleTheme() {
   bool isLight = App.themeNotifier.value == ThemeMode.light;
   App.themeNotifier.value = isLight?
@@ -34,6 +39,7 @@ ThemeMode getThemeMode() {
   return ThemeMode.system;
 }
 
+// App widget
 class App extends StatelessWidget {
   const App({Key? key}) : super(key: key);
   static final ValueNotifier<ThemeMode> themeNotifier = ValueNotifier(getThemeMode());

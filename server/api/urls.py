@@ -14,4 +14,5 @@ urlpatterns = [
     path('send-invite', SendInviteView().as_view()),
     path('get-invites', GetInvitesView().as_view()),
     path('create-project', CreateProjectView().as_view()),
+    path('get-projects', GetProjectsView().as_view())
 ]

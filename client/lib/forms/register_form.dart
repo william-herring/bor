@@ -27,7 +27,7 @@ class _RegisterFormState extends State<RegisterForm> {
     _formKey.currentState!.validate();
 
     http.post(
-        Uri.parse(serverPort + "/api/create-user"),
+        Uri.parse(apiPort + "/api/create-user"),
         headers: { 'Content-Type': 'application/json' },
         body: jsonEncode({
           'email': emailInput,
@@ -37,7 +37,7 @@ class _RegisterFormState extends State<RegisterForm> {
     );
 
     http.post(
-      Uri.parse(serverPort + "/api-token-auth/"),
+      Uri.parse(apiPort + "/api-token-auth/"),
       headers: { 'Content-Type': 'application/json' },
       body: jsonEncode({
         'username': userInput,

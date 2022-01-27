@@ -22,7 +22,7 @@ class _LoginFormState extends State<LoginForm> {
   void handleSubmit() {
     _formKey.currentState!.validate();
     http.post(
-        Uri.parse(serverPort + "/api-token-auth/"),
+        Uri.parse(apiPort + "/api-token-auth/"),
         headers: { 'Content-Type': 'application/json' },
         body: jsonEncode({
           'username': userInput,

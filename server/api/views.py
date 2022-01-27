@@ -219,9 +219,10 @@ class SendInviteView(APIView):
         return Response({'Bad Request': 'Invalid Serializer'}, status=HTTP_400_BAD_REQUEST)
 
 
+# Creates a project instance
 class CreateProjectView(APIView):
     permission_classes = [
-        permissions.AllowAny  # Change to authentication
+        permissions.IsAuthenticated
     ]
     serializer_class = ProjectSerializer
 
@@ -242,3 +243,15 @@ class CreateProjectView(APIView):
             return Response({'Not Found': 'Team does not exist'}, status=HTTP_404_NOT_FOUND)
 
         return Response({'Bad Request': 'Invalid Serializer'}, status=HTTP_400_BAD_REQUEST)
+
+
+class GetProjectsView(ListAPIView):
+    permission_classes = [
+        permissions.IsAuthenticated
+    ]
+    serializer_class = ProjectSerializer
+    lookup_url_kwarg = 'team_code'
+
+    def get_queryset(self):
+        projects = Project.objects.filter(team_code=self.request.GET.get(self.lookup_url_kwarg))
+        return projects

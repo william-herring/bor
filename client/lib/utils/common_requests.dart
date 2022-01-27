@@ -17,7 +17,7 @@ Description: Returns a Team object, containing all data for the team with matchi
 Future<Team> fetchTeam(String code) async {
   token = await getToken();
   final response = await http.get(
-      Uri.parse(serverPort + "/api/get-team?code=$code"),
+      Uri.parse(apiPort + "/api/get-team?code=$code"),
       headers: { 'Content-Type': 'application/json', 'Authorization': 'Token ${token.toString()}' }
   );
 
@@ -36,7 +36,7 @@ code.
 Future<http.Response> joinTeam(String code) async {
   token = await getToken();
   final response = await http.post(
-      Uri.parse(serverPort + "/api/join-team"),
+      Uri.parse(apiPort + "/api/join-team"),
       body: jsonEncode({
         "code": code
       }),
@@ -57,7 +57,7 @@ Future<List<User>> searchUsers(String searchArg) async {
 
   token = await getToken();
   final response = await http.get(
-    Uri.parse(serverPort + "/api/user?search=$searchArg"),
+    Uri.parse(apiPort + "/api/user?search=$searchArg"),
     headers: { 'Content-Type': 'application/json', 'Authorization': 'Token ${token.toString()}' }
   );
 
@@ -78,7 +78,7 @@ Description: Sends an invite email to user passed
 Future<http.Response> inviteUser(String code, String recipient) async {
   token = await getToken();
   final response = await http.post(
-      Uri.parse(serverPort + "/api/send-invite"),
+      Uri.parse(apiPort + "/api/send-invite"),
       headers: { 'Content-Type': 'application/json', 'Authorization': 'Token ${token.toString()}' },
       body: jsonEncode({
         "recipient": recipient,
@@ -98,7 +98,7 @@ Description: Creates a new team with specified title.
 Future<http.Response> createTeam(String title) async {
   token = await getToken();
   final response = await http.post(
-    Uri.parse(serverPort + "/api/create-team"),
+    Uri.parse(apiPort + "/api/create-team"),
     headers: { 'Content-Type': 'application/json', 'Authorization': 'Token ${token.toString()}' },
     body: jsonEncode({
       "title": title
@@ -115,7 +115,7 @@ Description: Returns current username for user logged in.
 Future<String> fetchUsername() async {
   token = await getToken();
   final response = await http.get(
-      Uri.parse(serverPort + "/api/get-username"),
+      Uri.parse(apiPort + "/api/get-username"),
       headers: { 'Content-Type': 'application/json', 'Authorization': 'Token ${token.toString()}' }
   );
 
@@ -135,7 +135,7 @@ Description: Returns all teams user is currently in
 Future<List<Team>> fetchUserTeams() async {
   token = await getToken();
   final response = await http.get(
-    Uri.parse(serverPort + "/api/get-user-teams"),
+    Uri.parse(apiPort + "/api/get-user-teams"),
     headers: { 'Content-Type': 'application/json', 'Authorization': 'Token ${token.toString()}' }
   );
 
@@ -150,7 +150,7 @@ Future<List<Team>> fetchUserTeams() async {
 Future<http.Response> fetchUserInvites() async {
   token = await getToken();
   final response = await http.get(
-    Uri.parse(serverPort + "/api/get-invites"),
+    Uri.parse(apiPort + "/api/get-invites"),
     headers: { 'Content-Type': 'application/json', 'Authorization': 'Token ${token.toString()}' }
   );
 
@@ -161,22 +161,50 @@ Future<http.Response> fetchUserInvites() async {
 Request: POST
 Description: Creates a new project with specified title/description/status.
  */
-Future<Project> createProject(String title, String description, bool open, String teamCode) async {
+Future<Project> createProject(String title, String description, bool open) async {
   token = await getToken();
   final response = await http.post(
-    Uri.parse(serverPort + "/api/create-project"),
+    Uri.parse(apiPort + "/api/create-project"),
       headers: { 'Content-Type': 'application/json', 'Authorization': 'Token ${token.toString()}' },
       body: jsonEncode({
-        'team_code': teamCode,
+        'team_code': currentTeam.code,
         'title': title,
         'description': description,
         'open': open,
       })
   );
 
-  if (response.statusCode != 200) {
+  if (response.statusCode != 201) {
     throw Exception('Failed to retrieve Project data. HTTP ${response.statusCode}');
   }
 
   return Project.fromJson(jsonDecode(response.body));
+}
+
+
+Future<List<Project>> fetchProjects() async {
+  token = await getToken();
+  final response = await http.get(
+    Uri.parse(apiPort + "/api/get-projects?team_code=${currentTeam.code}"),
+    headers: { 'Content-Type': 'application/json', 'Authorization': 'Token ${token.toString()}' },
+  );
+
+  if (response.statusCode != 200) {
+    throw Exception('Failed to load Project list. HTTP ${response.statusCode}');
+  }
+
+  List<Project> projects = [];
+  final body = jsonDecode(response.body);
+  print(body);
+
+  for (var i in body) {
+    projects.add(Project(
+        title: i["title"],
+        description: i["description"],
+        open: i["open"],
+        teamCode: i["team_code"]
+    ));
+  }
+
+  return projects;
 }
