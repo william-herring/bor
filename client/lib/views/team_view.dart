@@ -20,6 +20,7 @@ class _TeamViewState extends State<TeamView> {
   Future<String> username = fetchUsername();
   Future<List<Team>> teams = fetchUserTeams();
   late final PageController controller;
+  late final Team currentTeam;
   String currentTeamName = "No team selected";
 
   @override
@@ -33,6 +34,7 @@ class _TeamViewState extends State<TeamView> {
         controller.jumpToPage(0);
       }
 
+      currentTeam = value[0];
       currentTeamName = value[0].title;
     });
   }
@@ -125,10 +127,12 @@ class _TeamViewState extends State<TeamView> {
                       if (teamList.isEmpty) {
                         return TeamSelectorButton(onSelected: (value) => setState(() {
                           currentTeamName = value;
+                          currentTeam = snapshot.data!.where((item) => value == item.title).toList()[0]; //Filters all teams by selected title
                         }));
                       }
                       return TeamSelectorButton(currentTeamName: currentTeamName, teamList: teamList, onSelected: (value) => setState(() {
                         currentTeamName = value;
+                        currentTeam = snapshot.data!.where((item) => value == item.title).toList()[0]; //Filters all teams by selected title
                       }));
                     }
 
