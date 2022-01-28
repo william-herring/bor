@@ -4,10 +4,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:bor/main.dart';
 
 class CreateProjectForm extends StatefulWidget {
-  const CreateProjectForm({Key? key}) : super(key: key);
+  final Function onSubmit;
+  const CreateProjectForm({Key? key, required this.onSubmit}) : super(key: key);
 
   @override
-  _CreateProjectFormState createState() => _CreateProjectFormState();
+  _CreateProjectFormState createState() => _CreateProjectFormState(onSubmit);
 }
 
 class _CreateProjectFormState extends State<CreateProjectForm> {
@@ -15,11 +16,15 @@ class _CreateProjectFormState extends State<CreateProjectForm> {
   String title = "";
   String description = "";
   bool open = true;
+  final Function onSubmit;
+
+  _CreateProjectFormState(this.onSubmit);
 
   void handleSubmit() {
     final validation = _formKey.currentState!.validate();
     if (validation) {
       createProject(title, description, open);
+      onSubmit();
       Navigator.pop(context);
     }
   }

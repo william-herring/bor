@@ -25,7 +25,7 @@ class _ProjectListScreenState extends State<ProjectListScreen> {
           title: i.title,
           description: i.description,
           status: Chip(
-            label: Text(i.open? "Open" : "Closed", style: GoogleFonts.ubuntu()),
+            label: Text(i.open? "Open" : "Closed", style: GoogleFonts.ubuntu(color: Colors.white)),
             backgroundColor: i.open? Colors.green : Colors.red,
           ),
           onSelected: (selected) => setState(() {
@@ -50,7 +50,7 @@ class _ProjectListScreenState extends State<ProjectListScreen> {
         ),
         onPressed: () => showFormDialog(
             context,
-            const [CreateProjectForm()],
+            [CreateProjectForm(onSubmit: () => setState(() {}))], //In future, this should rebuild the list
             "Create project"
         ),
       ),

@@ -1,5 +1,6 @@
 import 'package:bor/screens/create_team.dart';
 import 'package:bor/screens/join_team.dart';
+import 'package:bor/screens/projects.dart';
 import 'package:bor/views/team_view.dart';
 import 'package:bor/views/login_register_view.dart';
 import 'package:flutter/material.dart';

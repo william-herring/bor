@@ -3,6 +3,7 @@ import 'package:bor/buttons/team_selector_button.dart';
 import 'package:bor/main.dart';
 import 'package:bor/objects/team_obj.dart';
 import 'package:bor/screens/home.dart';
+import 'package:bor/screens/members.dart';
 import 'package:bor/screens/no_team.dart';
 import 'package:bor/screens/projects.dart';
 import 'package:bor/utils/common_requests.dart';
@@ -148,9 +149,10 @@ class _TeamViewState extends State<TeamView> {
                   },
                 ),
                 ListTile(
-                  trailing: const Icon(Icons.home_filled, color: Colors.deepPurpleAccent, size: 26.0),
-                  title: Text("Home", style: GoogleFonts.ubuntu(fontWeight: FontWeight.w500,
-                      color: Colors.deepPurpleAccent)),
+                  trailing: const Icon(Icons.home_filled, size: 26.0),
+                  title: Text("Home", style: GoogleFonts.ubuntu(fontWeight: FontWeight.w500)),
+                  iconColor: Colors.deepPurpleAccent,
+                  textColor: Colors.deepPurpleAccent,
                   onTap: () => controller.jumpToPage(1),
                 ),
                 ListTile(
@@ -161,22 +163,22 @@ class _TeamViewState extends State<TeamView> {
                 ListTile(
                   trailing: const Icon(Icons.dashboard, size: 26.0),
                   title: Text("Team board", style: GoogleFonts.ubuntu(fontWeight: FontWeight.w500)),
-                  onTap: () {},
+                  onTap: () => controller.jumpToPage(3),
                 ),
                 ListTile(
                   trailing: const Icon(Icons.task_sharp, size: 26.0),
                   title: Text("Tasks", style: GoogleFonts.ubuntu(fontWeight: FontWeight.w500)),
-                  onTap: () {},
+                  onTap: () => controller.jumpToPage(4),
                 ),
                 ListTile(
                   trailing: const Icon(Icons.show_chart, size: 26.0),
                   title: Text("Statistics", style: GoogleFonts.ubuntu(fontWeight: FontWeight.w500)),
-                  onTap: () {},
+                  onTap: () => controller.jumpToPage(5),
                 ),
                 ListTile(
                   trailing: const Icon(Icons.people_sharp, size: 26.0),
                   title: Text("Members", style: GoogleFonts.ubuntu(fontWeight: FontWeight.w500)),
-                  onTap: () {},
+                  onTap: () => controller.jumpToPage(6),
                 ),
               ]
             ),
@@ -189,6 +191,10 @@ class _TeamViewState extends State<TeamView> {
           NoTeamScreen(), //Index 0 is always reserved for no team display.
           HomeScreen(),
           ProjectListScreen(),
+          Placeholder(),
+          Placeholder(),
+          Placeholder(),
+          MemberScreen(),
         ],
       ),
     );

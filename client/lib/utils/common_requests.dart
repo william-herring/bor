@@ -86,8 +86,6 @@ Future<http.Response> inviteUser(String code, String recipient) async {
       })
   );
 
-  print(response.body);
-
   return response;
 }
 
@@ -195,7 +193,6 @@ Future<List<Project>> fetchProjects() async {
 
   List<Project> projects = [];
   final body = jsonDecode(response.body);
-  print(body);
 
   for (var i in body) {
     projects.add(Project(

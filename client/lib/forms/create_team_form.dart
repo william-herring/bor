@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:bor/alerts/code_alert.dart';
+import 'package:bor/main.dart';
 import 'package:bor/objects/user_obj.dart';
 import 'package:bor/utils/common_requests.dart';
 import 'package:flutter/material.dart';
@@ -87,8 +88,8 @@ class _CreateTeamFormState extends State<CreateTeamForm> {
             });
           },
           tileColor: Colors.transparent,
-          iconColor: Colors.deepPurpleAccent,
-          textColor: Colors.black,
+          iconColor: getThemeMode() == ThemeMode.dark? Colors.white : Colors.deepPurpleAccent,
+          textColor: getThemeMode() == ThemeMode.dark? Colors.white : Colors.black,
           leading: const Icon(Icons.account_circle_sharp, size: 30.0),
           trailing: Text(username, style: GoogleFonts.ubuntu()),
         )
