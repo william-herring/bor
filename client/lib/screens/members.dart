@@ -188,6 +188,24 @@ class _MemberScreenState extends State<MemberScreen> {
                 ],
               ),
             ),
+            Padding(
+                padding: const EdgeInsets.only(top: 15.0),
+                child: ElevatedButton(
+                  onPressed: () => setState(() {}),
+                  child: Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Text(
+                      "Reload",
+                      style: GoogleFonts.ubuntu(
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.deepPurpleAccent,
+                  ),
+                )
+            ),
           ],
         ),
       ),

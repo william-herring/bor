@@ -99,11 +99,26 @@ class _ProjectListScreenState extends State<ProjectListScreen> {
                 }
               }
             ),
-            ElevatedButton(onPressed: () {
-              setState(() {
-                projects = fetchProjects();
-              });
-              }, child: Text("Rebuild widget"))
+            Padding(
+                padding: const EdgeInsets.only(top: 15.0),
+                child: ElevatedButton(
+                  onPressed: () => setState(() {
+                    projects = fetchProjects();
+                  }),
+                  child: Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Text(
+                      "Reload",
+                      style: GoogleFonts.ubuntu(
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.deepPurpleAccent,
+                  ),
+                )
+            ),
           ],
         ),
       ),

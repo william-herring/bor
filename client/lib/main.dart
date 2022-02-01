@@ -47,11 +47,11 @@ class App extends StatelessWidget {
 
   @override
   Widget build(context) {
-    //ValueListener to handle theme toggle
+    // ValueListener to handle theme toggle
     return ValueListenableBuilder<ThemeMode>(
       valueListenable: themeNotifier,
       builder: (context, ThemeMode currentMode, widget) {
-        //MaterialApp starts here
+        // MaterialApp starts here
         return MaterialApp(
           darkTheme: ThemeData.dark(),
           themeMode: currentMode,

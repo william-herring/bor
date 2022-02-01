@@ -196,7 +196,7 @@ class _TeamViewState extends State<TeamView> {
           Placeholder(),
           MemberScreen(),
         ],
-      ),
+      )
     );
   }
 }
