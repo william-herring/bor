@@ -1,18 +1,12 @@
-import os
-
 from rest_framework.generics import ListAPIView, CreateAPIView
 from rest_framework.views import APIView
 from rest_framework import permissions
-from .email_templates import get_invite_template
 from .models import Team, Project
 from rest_framework.status import *
 from rest_framework.response import Response
 from rest_framework import filters
-from django.core.mail import send_mail
 from django.contrib.auth.models import User
 from .serializers import *
-from sendgrid import SendGridAPIClient
-from sendgrid.helpers.mail import Mail
 
 
 # UserView should not be used for administration. It has search functionality, and is used by the client.

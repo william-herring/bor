@@ -7,6 +7,8 @@ import 'package:bor/utils/common_requests.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../main.dart';
+
 class ProjectListScreen extends StatefulWidget {
   const ProjectListScreen({Key? key}) : super(key: key);
 
@@ -96,7 +98,12 @@ class _ProjectListScreenState extends State<ProjectListScreen> {
                   );
                 }
               }
-            )
+            ),
+            ElevatedButton(onPressed: () {
+              setState(() {
+                projects = fetchProjects();
+              });
+              }, child: Text("Rebuild widget"))
           ],
         ),
       ),
