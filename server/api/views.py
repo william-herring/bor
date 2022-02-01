@@ -111,27 +111,6 @@ class UpdateTeamView(APIView):
         return Response({'Bad Request': 'Invalid serializer'}, status=HTTP_400_BAD_REQUEST)
 
 
-# In future, this view should validate that the user requesting to delete, is also logged in with an email matching
-# that of the team leader.
-class DeleteTeamView(APIView):
-    lookup_url_kwarg = 'code'
-    permission_classes = [
-        permissions.IsAuthenticated
-    ]
-
-    def post(self, request, format=None):
-        code = request.data.get(self.lookup_url_kwarg)
-        if code is not None:
-            team_result = Team.objects.filter(code=code)
-            if len(team_result) > 0:
-                team = team_result[0]
-                team.delete()
-                return Response({'Successfully deleted team': f'{code}'}, status=HTTP_200_OK)
-            return Response({'Not Found': 'Team does not exist'}, status=HTTP_404_NOT_FOUND)
-
-        return Response({'Bad Request': 'Invalid code'}, status=HTTP_400_BAD_REQUEST)
-
-
 class JoinTeamView(APIView):
     lookup_url_kwarg = 'code'
     permission_classes = [
@@ -239,6 +218,7 @@ class CreateProjectView(APIView):
         return Response({'Bad Request': 'Invalid Serializer'}, status=HTTP_400_BAD_REQUEST)
 
 
+# Returns a list of all projects within a team
 class GetProjectsView(ListAPIView):
     permission_classes = [
         permissions.IsAuthenticated

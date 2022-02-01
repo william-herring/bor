@@ -20,6 +20,26 @@ class _ProjectListScreenState extends State<ProjectListScreen> {
   int selectedTiles = 0;
   Future<List<Project>> projects = fetchProjects();
 
+  void _showMenu(Offset offset) async {
+    await showMenu(
+      context: context,
+      position: RelativeRect.fromLTRB(offset.dx, offset.dy, 0, 0),
+      items: [
+        PopupMenuItem<String>(
+          onTap: () {},
+            child: Text('Edit', style: GoogleFonts.ubuntu()),
+            value: 'Test'
+        ),
+        PopupMenuItem<String>(
+            onTap: () {},
+            child: Text('Delete', style: GoogleFonts.ubuntu()),
+            value: 'Test1'
+        ),
+      ],
+      elevation: 8.0,
+    );
+  }
+
   List<Widget> buildTiles(List<Project> data) {
     List<Widget> tiles = [];
     for (var i in data) {
@@ -64,11 +84,10 @@ class _ProjectListScreenState extends State<ProjectListScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: (selectedTiles > 0)? [
-                IconButton(
-                    onPressed: () {},
-                    icon: const Icon(Icons.more_vert),
-                    color: Colors.deepPurpleAccent,
-                    iconSize: 26,
+                InkWell(
+                  onTap: () {},
+                  onTapDown: (details) => _showMenu(details.globalPosition),
+                  child: const Icon(Icons.more_vert, color: Colors.deepPurpleAccent, size: 26),
                 )
               ] : [],
             ),
