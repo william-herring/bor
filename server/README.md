@@ -4,12 +4,13 @@ The dev server is a mock of the server that will eventually be used in productio
 Obviously, the database and SECRET-KEY will be different, for security reasons.
 
 
-## About
+## API
 Bor uses a [REST API](https://www.redhat.com/en/topics/api/what-is-a-rest-api), which enables the client to access
 data quickly and easily. To build the API, Bor is using Django REST Framework. You can access
 the documentation [here](https://www.django-rest-framework.org/). The backend of Bor can be slightly more difficult, 
 particularly for beginners or developers who are inexperienced with these technologies. 
 
+## Database
 SQLite3 serves as the database for Bor. SQLite3 comes as the default database when creating a Django project, and it should
 work just fine for a project like Bor. If we require a larger or more complex database as we get more users, it may be worth considering
 alternatives like PostgreSQL, but for the time being, it will stay as SQLite3. The database can be located in the server's root
